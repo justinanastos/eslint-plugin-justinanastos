@@ -1,0 +1,47 @@
+{
+  "name": "eslint-plugin-brooklyn",
+  "version": "1.0.0",
+  "author": "Justin Anastos <justin.anastos+npm@gmail.com>",
+  "description": "Brooklyn-web specific linting rules for ESLint",
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin"
+  ],
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "eslint ./",
+    "test": "mocha tests --recursive"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.js",
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justinanastos/eslint-plugin-brooklyn"
+  },
+  "homepage": "https://github.com/justinanastos/eslint-plugin-brooklyn",
+  "bugs": "https://github.com/justinanastos/eslint-plugin-brooklyn/issues",
+  "dependencies": {
+    "lodash": "^4.0.0",
+    "requireindex": "^1.1.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "coveralls": "2.11.15",
+    "eslint": "^3.9.1",
+    "eslint-config-brooklyn": "git+ssh://git@code.wds.io/brooklyn/eslint-config-brooklyn.git#v3.0.0",
+    "has": "^1.0.1",
+    "mocha": "~3.1.2"
+  },
+  "peerDependencies": {
+    "eslint": "^2.0.0 || ^3.0.0"
+  },
+  "engines": {
+    "node": ">=4.0"
+  },
+  "license": "ISC"
+}
