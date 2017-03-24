@@ -1,5 +1,5 @@
 {
-  "name": "eslint-plugin-brooklyn",
+  "name": "eslint-plugin-justinanastos",
   "version": "1.0.0",
   "author": "Justin Anastos <justin.anastos+npm@gmail.com>",
   "description": "Brooklyn-web specific linting rules for ESLint",
