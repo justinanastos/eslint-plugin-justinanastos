@@ -58,7 +58,9 @@ ruleTester.run('alpha-object-expression', rule, {
   invalid: [
     {
       code: 'var obj = { B: true, A: true }',
-      errors: ["'A' is not alphabetized"],
+      errors: [
+        '\'B\' and \'A\' are not alphabetized',
+      ],
       output: 'var obj = { A: true, B: true }',
       parserOptions: { ecmaVersion: 6 },
     },
@@ -69,7 +71,9 @@ ruleTester.run('alpha-object-expression', rule, {
           A: true
         }
       `,
-      errors: ["'A' is not alphabetized"],
+      errors: [
+        '\'B\' and \'A\' are not alphabetized',
+      ],
       output: `
         var obj = {
           A: true,
@@ -80,28 +84,40 @@ ruleTester.run('alpha-object-expression', rule, {
     },
     {
       code: 'var obj = { b, a: true }',
-      errors: ["'a' is not alphabetized"],
+      errors: [
+        '\'b\' and \'a\' are not alphabetized',
+      ],
       options: [{
         favorShorthand: false,
       }],
+      output: 'var obj = { a: true, b }',
       parserOptions: { ecmaVersion: 6 },
     },
     {
       code: 'var obj = { b: true, A: true }',
-      errors: ["'A' is not alphabetized"],
+      errors: [
+        '\'b\' and \'A\' are not alphabetized',
+      ],
       options: [{
         ignoreAllCapitalized: true,
       }],
+      output: 'var obj = { A: true, b: true }',
       parserOptions: { ecmaVersion: 6 },
     },
     {
-      code: 'var obj = { b: () => true, c: true, a: false }',
-      errors: ["'a' is not alphabetized"],
+      code: 'var obj = { b: () => true, a: false }',
+      errors: [
+        '\'b\' and \'a\' are not alphabetized',
+      ],
+      output: 'var obj = { a: false, b: () => true }',
       parserOptions: { ecmaVersion: 6 },
     },
     {
-      code: 'var obj = { b() {}, c: true, a: false }',
-      errors: ["'a' is not alphabetized"],
+      code: 'var obj = { b() {}, a: true }',
+      errors: [
+        '\'b\' and \'a\' are not alphabetized',
+      ],
+      output: 'var obj = { a: true, b() {} }',
       parserOptions: { ecmaVersion: 6 },
     },
   ],
