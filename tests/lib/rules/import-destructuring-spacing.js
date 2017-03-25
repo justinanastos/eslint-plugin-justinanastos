@@ -48,10 +48,10 @@ ruleTester.run('import-destructuring-spacing', rule, {
           a,
           b,
           c
-      } from 'somewhere'`,
+        } from 'somewhere'
+      `,
       options: [{
         collapse: true,
-        enforceIndentation: false,
         maxProperties: 3,
       }],
       parserOptions,
@@ -62,9 +62,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
           a,
           b,
           c
-      } from 'somewhere'`,
+        } from 'somewhere'
+      `,
       options: [{
-        enforceIndentation: false,
         maxProperties: 3,
       }],
       parserOptions,
@@ -73,7 +73,6 @@ ruleTester.run('import-destructuring-spacing', rule, {
       code: "import {a, b} from 'somewhere'",
       parserOptions,
       options: [{
-        enforceIndentation: false,
         maxProperties: 3,
       }],
     },
@@ -85,9 +84,6 @@ ruleTester.run('import-destructuring-spacing', rule, {
       `,
       parser: 'babel-eslint',
       parserOptions,
-      options: [{
-        enforceIndentation: false,
-      }],
     },
     {
       code: `
@@ -96,17 +92,11 @@ ruleTester.run('import-destructuring-spacing', rule, {
       `,
       parser: 'babel-eslint',
       parserOptions,
-      options: [{
-        enforceIndentation: false,
-      }],
     },
     {
       code: "import type { FetchLayoutPageDiffActionCreator } from '../../../actions/layout-page-action/fetch-page-diff-action'",
       parser: 'babel-eslint',
       parserOptions,
-      options: [{
-        enforceIndentation: false,
-      }],
     },
     {
       code: `
@@ -114,9 +104,6 @@ ruleTester.run('import-destructuring-spacing', rule, {
           from '../../../actions/layout-page-action/fetch-page-diff-action';
       `,
       parserOptions,
-      options: [{
-        enforceIndentation: false,
-      }],
     },
   ],
 
@@ -127,29 +114,43 @@ ruleTester.run('import-destructuring-spacing', rule, {
           from 'somewhere';
       `,
       errors: [
-        'line break missing between bracket and \'a\'',
+        'line break missing between opening bracket and \'a\'',
         'line break missing between \'a\' and closing bracket',
       ],
-      parser: 'babel-eslint',
-      parserOptions,
       options: [{
         enforceIndentation: false,
         maxProperties: 1,
       }],
+      output: `
+        import type {
+          a
+        } from 'somewhere';
+      `,
+      parser: 'babel-eslint',
+      parserOptions,
     },
     {
-      code: "import {a, b, c} from 'somewhere'",
+      code: `
+        import {a, b, c} from 'somewhere'
+      `,
       errors: [
-        'line break missing between bracket and \'a\'',
+        'line break missing between opening bracket and \'a\'',
         'missing line break between \'a\' and \'b\'',
         'missing line break between \'b\' and \'c\'',
         'line break missing between \'c\' and closing bracket',
       ],
-      parserOptions,
+      output: `
+        import {
+          a,
+          b,
+          c
+        } from 'somewhere'
+      `,
       options: [{
         enforceIndentation: false,
         maxProperties: 3,
       }],
+      parserOptions,
     },
     {
       code: `
@@ -158,19 +159,51 @@ ruleTester.run('import-destructuring-spacing', rule, {
         c} from 'somewhere'
       `,
       errors: [
-        'line break missing between bracket and \'a\'',
+        'line break missing between opening bracket and \'a\'',
         'line break missing between \'c\' and closing bracket',
+        'incorrect indentation for \'c\'',
       ],
-      parserOptions,
       options: [{
-        enforceIndentation: false,
         maxProperties: 3,
       }],
+      output: `
+        import {
+          a,
+          b,
+          c
+        } from 'somewhere'
+      `,
+      parserOptions,
     },
     {
-      code: "import { a, b, c, d, e, f, g, h } from 'somewhere'",
+      code: `
+        import {a,
+          b,
+        c,} from 'somewhere'
+      `,
       errors: [
-        'line break missing between bracket and \'a\'',
+        'line break missing between opening bracket and \'a\'',
+        'line break missing between \'c\' and closing bracket',
+        'incorrect indentation for \'c\'',
+      ],
+      options: [{
+        maxProperties: 3,
+      }],
+      output: `
+        import {
+          a,
+          b,
+          c,
+        } from 'somewhere'
+      `,
+      parserOptions,
+    },
+    {
+      code: `
+        import { a, b, c, d, e, f, g, h } from 'somewhere'
+      `,
+      errors: [
+        'line break missing between opening bracket and \'a\'',
         'missing line break between \'a\' and \'b\'',
         'missing line break between \'b\' and \'c\'',
         'missing line break between \'c\' and \'d\'',
@@ -180,31 +213,64 @@ ruleTester.run('import-destructuring-spacing', rule, {
         'missing line break between \'g\' and \'h\'',
         'line break missing between \'h\' and closing bracket',
       ],
-      parserOptions,
       options: [{
         maxProperties: 3,
       }],
+      output: `
+        import {
+          a,
+          b,
+          c,
+          d,
+          e,
+          f,
+          g,
+          h
+        } from 'somewhere'
+      `,
+      parserOptions,
     },
     {
       code: `
         import {
-          a, b, c, d, e, f, g, h
+          a, b
         } from 'somewhere'
       `,
       errors: [
-        "missing line break between 'a' and 'b'",
-        "missing line break between 'b' and 'c'",
-        "missing line break between 'c' and 'd'",
-        "missing line break between 'd' and 'e'",
-        "missing line break between 'e' and 'f'",
-        "missing line break between 'f' and 'g'",
-        "missing line break between 'g' and 'h'",
+        'missing line break between \'a\' and \'b\''
       ],
-      parserOptions,
       options: [{
-        maxProperties: 3,
-        enforceIndentation: false,
+        collapse: true,
+        maxProperties: 1,
       }],
+      output: `
+        import {
+          a,
+          b
+        } from 'somewhere'
+      `,
+      parserOptions,
+    },
+    {
+      code: `
+        import {
+          a,
+          b,
+          c,
+          d
+        } from 'somewhere'
+      `,
+      errors: [
+        'unncessary line breaks in import statement',
+      ],
+      options: [{
+        collapse: true,
+        maxProperties: 5,
+      }],
+      output: `
+        import { a, b, c, d } from 'somewhere'
+      `,
+      parserOptions,
     },
     {
       code: `
@@ -220,9 +286,11 @@ ruleTester.run('import-destructuring-spacing', rule, {
       ],
       options: [{
         collapse: true,
-        enforceIndentation: false,
         maxProperties: 5,
       }],
+      output: `
+        import { a, b, c, d, } from 'somewhere'
+      `,
       parserOptions,
     },
     {
@@ -238,10 +306,17 @@ ruleTester.run('import-destructuring-spacing', rule, {
       ],
       options: [{
         collapse: false,
-        enforceIndentation: false,
         maxProperties: 3,
         multiline: true,
       }],
+      output: `
+        import {
+          a,
+          b,
+          c,
+          d,
+        } from 'somewhere'
+      `,
       parserOptions,
     },
   ],

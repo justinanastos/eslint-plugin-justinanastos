@@ -83,6 +83,24 @@ ruleTester.run('alpha-object-expression', rule, {
       parserOptions: { ecmaVersion: 6 },
     },
     {
+      code: `
+        var obj = {
+          'B-1': true,
+          'A-1': true
+        }
+      `,
+      errors: [
+        '\'B-1\' and \'A-1\' are not alphabetized',
+      ],
+      output: `
+        var obj = {
+          'A-1': true,
+          'B-1': true
+        }
+      `,
+      parserOptions: { ecmaVersion: 6 },
+    },
+    {
       code: 'var obj = { b, a: true }',
       errors: [
         '\'b\' and \'a\' are not alphabetized',
