@@ -10,9 +10,9 @@ We want clear rules on how destructured import specifiers are broken up by lines
 
 This rule has an object option:
 
-- `collapse: true` (default) enforces specifiers are not split by line breaks if they are less than `minProperties` specifiers.
+- `collapse: true` (default) enforces specifiers are not split by line breaks if they are less than `maxProperties` specifiers.
 
-- `minProperties`
+- `maxProperties`
 
     If there more than or equal to this many specifiers, then they must be broken up.
 
@@ -28,19 +28,19 @@ This rule has an object option:
 
     This is here because import specifiers are not enforced by [`indent`](http://eslint.org/docs/rules/key-spacing).
 
-## `minProperties`
+## `maxProperties`
 
-👎 Examples of **incorrect** code for this rule with the `{ minProperties: 3 }` option:
+👎 Examples of **incorrect** code for this rule with the `{ maxProperties: 3 }` option:
 
 ```js
-// eslint import-destructuring-spacing: ["error", { minProperties: 3 }]
+// eslint import-destructuring-spacing: ["error", { maxProperties: 3 }]
 import {a, b, c} from 'somewhere';
 ```
 
-👍 Examples of **correct** code for this rule with the `{ minProperties: 3 }` option:
+👍 Examples of **correct** code for this rule with the `{ maxProperties: 3 }` option:
 
 ```js
-// eslint import-destructuring-spacing: ["error", { minProperties: 3 }]
+// eslint import-destructuring-spacing: ["error", { maxProperties: 3 }]
 import {
     a,
     b,
@@ -49,16 +49,16 @@ import {
 ```
 
 ```js
-// eslint import-destructuring-spacing: ["error", { minProperties: 3 }]
+// eslint import-destructuring-spacing: ["error", { maxProperties: 3 }]
 import {a, b} from 'somewhere';
 ```
 
-## `collapse: true` and `minProperties`
+## `collapse: true` and `maxProperties`
 
-👎 Examples of **incorrect** code for this rule with the `{ "collapse": true, minProperties: 3 }` option:
+👎 Examples of **incorrect** code for this rule with the `{ "collapse": true, maxProperties: 3 }` option:
 
 ```js
-// eslint import-destructuring-spacing: ["error", { "collapse": true, minProperties: 3 }]
+// eslint import-destructuring-spacing: ["error", { "collapse": true, maxProperties: 3 }]
 import {
     a,
     b,
@@ -66,10 +66,10 @@ import {
 } from 'somewhere';
 ```
 
-👍 Examples of **correct** code for this rule with the `{ "collapse": true, minProperties: 3 }` option:
+👍 Examples of **correct** code for this rule with the `{ "collapse": true, maxProperties: 3 }` option:
 
 ```js
-// eslint import-destructuring-spacing: ["error", { "collapse": true, minProperties: 3 }]
+// eslint import-destructuring-spacing: ["error", { "collapse": true, maxProperties: 3 }]
 import {
     a,
     b,
@@ -78,7 +78,7 @@ import {
 ```
 
 ```js
-// eslint import-destructuring-spacing: ["error", { "collapse": true, minProperties: 3 }]
+// eslint import-destructuring-spacing: ["error", { "collapse": true, maxProperties: 3 }]
 import {a, b} from 'somewhere';
 ```
 

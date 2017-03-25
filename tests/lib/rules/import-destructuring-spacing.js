@@ -30,7 +30,7 @@ ruleTester.run('import-destructuring-spacing', rule, {
       code: "import { a, b, c, d } from 'somewhere'",
       options: [{
         collapse: true,
-        minProperties: 5,
+        maxProperties: 5,
       }],
       parserOptions,
     },
@@ -38,7 +38,7 @@ ruleTester.run('import-destructuring-spacing', rule, {
       code: "import { a, b } from 'somewhere'",
       options: [{
         collapse: true,
-        minProperties: 3,
+        maxProperties: 3,
       }],
       parserOptions,
     },
@@ -52,7 +52,7 @@ ruleTester.run('import-destructuring-spacing', rule, {
       options: [{
         collapse: true,
         enforceIndentation: false,
-        minProperties: 3,
+        maxProperties: 3,
       }],
       parserOptions,
     },
@@ -65,7 +65,7 @@ ruleTester.run('import-destructuring-spacing', rule, {
       } from 'somewhere'`,
       options: [{
         enforceIndentation: false,
-        minProperties: 3,
+        maxProperties: 3,
       }],
       parserOptions,
     },
@@ -74,7 +74,7 @@ ruleTester.run('import-destructuring-spacing', rule, {
       parserOptions,
       options: [{
         enforceIndentation: false,
-        minProperties: 3,
+        maxProperties: 3,
       }],
     },
     {
@@ -134,7 +134,7 @@ ruleTester.run('import-destructuring-spacing', rule, {
       parserOptions,
       options: [{
         enforceIndentation: false,
-        minProperties: 1,
+        maxProperties: 1,
       }],
     },
     {
@@ -148,7 +148,7 @@ ruleTester.run('import-destructuring-spacing', rule, {
       parserOptions,
       options: [{
         enforceIndentation: false,
-        minProperties: 3,
+        maxProperties: 3,
       }],
     },
     {
@@ -164,7 +164,7 @@ ruleTester.run('import-destructuring-spacing', rule, {
       parserOptions,
       options: [{
         enforceIndentation: false,
-        minProperties: 3,
+        maxProperties: 3,
       }],
     },
     {
@@ -182,7 +182,7 @@ ruleTester.run('import-destructuring-spacing', rule, {
       ],
       parserOptions,
       options: [{
-        minProperties: 3,
+        maxProperties: 3,
       }],
     },
     {
@@ -202,7 +202,7 @@ ruleTester.run('import-destructuring-spacing', rule, {
       ],
       parserOptions,
       options: [{
-        minProperties: 3,
+        maxProperties: 3,
         enforceIndentation: false,
       }],
     },
@@ -221,7 +221,7 @@ ruleTester.run('import-destructuring-spacing', rule, {
       options: [{
         collapse: true,
         enforceIndentation: false,
-        minProperties: 5,
+        maxProperties: 5,
       }],
       parserOptions,
     },
@@ -239,7 +239,7 @@ ruleTester.run('import-destructuring-spacing', rule, {
       options: [{
         collapse: false,
         enforceIndentation: false,
-        minProperties: 3,
+        maxProperties: 3,
         multiline: true,
       }],
       parserOptions,
