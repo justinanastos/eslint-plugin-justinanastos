@@ -59,6 +59,23 @@ ruleTester.run('alpha-object-expression', rule, {
     {
       code: 'var obj = { B: true, A: true }',
       errors: ["'A' is not alphabetized"],
+      output: 'var obj = { A: true, B: true }',
+      parserOptions: { ecmaVersion: 6 },
+    },
+    {
+      code: `
+        var obj = {
+          B: true,
+          A: true
+        }
+      `,
+      errors: ["'A' is not alphabetized"],
+      output: `
+        var obj = {
+          A: true,
+          B: true
+        }
+      `,
       parserOptions: { ecmaVersion: 6 },
     },
     {
