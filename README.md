@@ -11,7 +11,7 @@
 There is a `peerDependencies` on `eslint@^3.16`.
 
 ```shell
-$ npm i --save-dev eslint-plugin-wyze eslint
+$ npm i --save-dev eslint-plugin-justinanastos eslint
 ```
 
 ## Usage
@@ -69,8 +69,8 @@ MIT © [Justin Anastos](https://justinanastos.github.io)
 [travis-image]: https://img.shields.io/travis/justinanastos/eslint-plugin-justinanastos.svg?style=flat-square
 [travis-url]: https://travis-ci.org/justinanastos/eslint-plugin-justinanastos
 
-[npm-image]: https://img.shields.io/npm/v/eslint-plugin-wyze.svg?style=flat-square
-[npm-url]: https://npmjs.com/package/eslint-plugin-wyze
+[npm-image]: https://img.shields.io/npm/v/eslint-plugin-justinanastos.svg?style=flat-square
+[npm-url]: https://npmjs.com/package/eslint-plugin-justinanastos
 
 [depsdev-image]: https://img.shields.io/david/dev/justinanastos/eslint-plugin-justinanastos.svg?style=flat-square
 [depsdev-url]: https://david-dm.org/justinanastos/eslint-plugin-justinanastos?type=dev
