@@ -2,6 +2,7 @@
 
 [![Build Status][travis-image]][travis-url]
 [![npm][npm-image]][npm-url]
+[![dependencies][deps-image]][deps-url]
 [![devDependencies][depsdev-image]][depsdev-url]
 
 > My personal [ESLint](//github.com/eslint/eslint) rules.
@@ -72,5 +73,8 @@ MIT © [Justin Anastos](https://justinanastos.github.io)
 [npm-image]: https://img.shields.io/npm/v/eslint-plugin-justinanastos.svg?style=flat-square
 [npm-url]: https://npmjs.com/package/eslint-plugin-justinanastos
 
-[depsdev-image]: https://img.shields.io/david/dev/justinanastos/eslint-plugin-justinanastos.svg?style=flat-square
+[deps-image]: https://david-dm.org/justinanastos/eslint-plugin-justinanastos/status.svg?style=flat-square
+[deps-url]: https://david-dm.org/justinanastos/eslint-plugin-justinanastos
+[depsdev-image]: https://david-dm.org/justinanastos/eslint-plugin-justinanastos/dev-status.svg?style=flat-square
+[depsdev-url]: https://david-dm.org/justinanastos/eslint-plugin-justinanastos?type=dev
 [depsdev-url]: https://david-dm.org/justinanastos/eslint-plugin-justinanastos?type=dev
