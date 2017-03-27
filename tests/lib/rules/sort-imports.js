@@ -50,20 +50,23 @@ ruleTester.run('sort-imports', rule, {
     {
       code: "import { b, a } from 'somewhere';",
       errors: ["Member 'a' of the import declaration should be sorted alphabetically."],
+      output: "import { a, b } from 'somewhere';",
       parserOptions,
     },
     {
       code: "import { B, a } from 'somewhere';",
       errors: ["Member 'a' of the import declaration should be sorted alphabetically."],
-      parserOptions,
       options: [{
         ignoreCase: true,
       }],
+      output: "import { a, B } from 'somewhere';",
+      parserOptions,
     },
     {
       code: "import React, { b, a } from 'somewhere'",
-      parserOptions,
       errors: ["Member 'a' of the import declaration should be sorted alphabetically."],
+      output: "import React, { a, b } from 'somewhere'",
+      parserOptions,
     },
   ],
 });
