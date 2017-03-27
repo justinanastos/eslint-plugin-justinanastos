@@ -31,11 +31,10 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
-    "coveralls": "2.11.15",
-    "eslint": "~3.16.0",
+    "eslint": "^3.18.0",
     "eslint-config-brooklyn": "git+ssh://git@code.wds.io/brooklyn/eslint-config-brooklyn.git#v3.0.0",
     "has": "^1.0.1",
-    "mocha": "~3.1.2"
+    "mocha": "^3.2.0"
   },
   "peerDependencies": {
     "eslint": ">=3.16.0"
