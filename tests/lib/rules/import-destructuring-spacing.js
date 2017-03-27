@@ -21,94 +21,9 @@ const parserOptions = { ecmaVersion: 6, sourceType: 'module' };
 const ruleTester = new RuleTester();
 ruleTester.run('import-destructuring-spacing', rule, {
 
-  valid: [
-    {
-      code: "import { a , b, c, d, e, f, g, h } from 'somewhere'",
-      parserOptions,
-    },
-    {
-      code: "import { a, b, c, d } from 'somewhere'",
-      options: [{
-        collapse: true,
-        maxProperties: 5,
-      }],
-      parserOptions,
-    },
-    {
-      code: "import { a, b } from 'somewhere'",
-      options: [{
-        collapse: true,
-        maxProperties: 3,
-      }],
-      parserOptions,
-    },
-    {
-      code: `
-        import {
-          a,
-          b,
-          c
-        } from 'somewhere'
-      `,
-      options: [{
-        collapse: true,
-        maxProperties: 3,
-      }],
-      parserOptions,
-    },
-    {
-      code: `
-        import {
-          a,
-          b,
-          c
-        } from 'somewhere'
-      `,
-      options: [{
-        maxProperties: 3,
-      }],
-      parserOptions,
-    },
-    {
-      code: "import {a, b} from 'somewhere'",
-      parserOptions,
-      options: [{
-        maxProperties: 3,
-      }],
-    },
-    {
-      code: `
-        import type { FetchLayoutPageDiffActionCreator }
-          // test
-          from '../../../actions/layout-page-action/fetch-page-diff-action';
-      `,
-      parser: 'babel-eslint',
-      parserOptions,
-    },
-    {
-      code: `
-        import type { FetchLayoutPageDiffActionCreator }
-          from '../../../actions/layout-page-action/fetch-page-diff-action';
-      `,
-      parser: 'babel-eslint',
-      parserOptions,
-    },
-    {
-      code: "import type { FetchLayoutPageDiffActionCreator } from '../../../actions/layout-page-action/fetch-page-diff-action'",
-      parser: 'babel-eslint',
-      parserOptions,
-    },
-    {
-      code: `
-        import FetchLayoutPageDiffActionCreator
-          from '../../../actions/layout-page-action/fetch-page-diff-action';
-      `,
-      parserOptions,
-    },
-  ],
-
   invalid: [
     {
+      parserOptions,
       code: `
         import type { a }
           from 'somewhere';
@@ -127,9 +42,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
         } from 'somewhere';
       `,
       parser: 'babel-eslint',
-      parserOptions,
     },
     {
+      parserOptions,
       code: `
         import {a, b, c} from 'somewhere'
       `,
@@ -139,6 +54,10 @@ ruleTester.run('import-destructuring-spacing', rule, {
         'missing line break between \'b\' and \'c\'',
         'line break missing between \'c\' and closing bracket',
       ],
+      options: [{
+        enforceIndentation: false,
+        maxProperties: 3,
+      }],
       output: `
         import {
           a,
@@ -146,13 +65,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
           c
         } from 'somewhere'
       `,
-      options: [{
-        enforceIndentation: false,
-        maxProperties: 3,
-      }],
-      parserOptions,
     },
     {
+      parserOptions,
       code: `
         import {a,
           b,
@@ -173,9 +88,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
           c
         } from 'somewhere'
       `,
-      parserOptions,
     },
     {
+      parserOptions,
       code: `
         import {a,
           b,
@@ -196,9 +111,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
           c,
         } from 'somewhere'
       `,
-      parserOptions,
     },
     {
+      parserOptions,
       code: `
         import { a, b, c, d, e, f, g, h } from 'somewhere'
       `,
@@ -228,16 +143,16 @@ ruleTester.run('import-destructuring-spacing', rule, {
           h
         } from 'somewhere'
       `,
-      parserOptions,
     },
     {
+      parserOptions,
       code: `
         import {
           a, b
         } from 'somewhere'
       `,
       errors: [
-        'missing line break between \'a\' and \'b\''
+        'missing line break between \'a\' and \'b\'',
       ],
       options: [{
         collapse: true,
@@ -249,9 +164,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
           b
         } from 'somewhere'
       `,
-      parserOptions,
     },
     {
+      parserOptions,
       code: `
         import {
           a,
@@ -270,9 +185,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
       output: `
         import { a, b, c, d } from 'somewhere'
       `,
-      parserOptions,
     },
     {
+      parserOptions,
       code: `
         import {
           a,
@@ -291,9 +206,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
       output: `
         import { a, b, c, d, } from 'somewhere'
       `,
-      parserOptions,
     },
     {
+      parserOptions,
       code: `
         import {
           a, b,
@@ -317,7 +232,92 @@ ruleTester.run('import-destructuring-spacing', rule, {
           d,
         } from 'somewhere'
       `,
+    },
+  ],
+
+  valid: [
+    {
       parserOptions,
+      code: "import { a , b, c, d, e, f, g, h } from 'somewhere'",
+    },
+    {
+      parserOptions,
+      code: "import { a, b, c, d } from 'somewhere'",
+      options: [{
+        collapse: true,
+        maxProperties: 5,
+      }],
+    },
+    {
+      parserOptions,
+      code: "import { a, b } from 'somewhere'",
+      options: [{
+        collapse: true,
+        maxProperties: 3,
+      }],
+    },
+    {
+      parserOptions,
+      code: `
+        import {
+          a,
+          b,
+          c
+        } from 'somewhere'
+      `,
+      options: [{
+        collapse: true,
+        maxProperties: 3,
+      }],
+    },
+    {
+      parserOptions,
+      code: `
+        import {
+          a,
+          b,
+          c
+        } from 'somewhere'
+      `,
+      options: [{
+        maxProperties: 3,
+      }],
+    },
+    {
+      parserOptions,
+      code: "import {a, b} from 'somewhere'",
+      options: [{
+        maxProperties: 3,
+      }],
+    },
+    {
+      parserOptions,
+      code: `
+        import type { FetchLayoutPageDiffActionCreator }
+          // test
+          from '../../../actions/layout-page-action/fetch-page-diff-action';
+      `,
+      parser: 'babel-eslint',
+    },
+    {
+      parserOptions,
+      code: `
+        import type { FetchLayoutPageDiffActionCreator }
+          from '../../../actions/layout-page-action/fetch-page-diff-action';
+      `,
+      parser: 'babel-eslint',
+    },
+    {
+      parserOptions,
+      code: "import type { FetchLayoutPageDiffActionCreator } from '../../../actions/layout-page-action/fetch-page-diff-action'",
+      parser: 'babel-eslint',
+    },
+    {
+      parserOptions,
+      code: `
+        import FetchLayoutPageDiffActionCreator
+          from '../../../actions/layout-page-action/fetch-page-diff-action';
+      `,
     },
   ],
 });

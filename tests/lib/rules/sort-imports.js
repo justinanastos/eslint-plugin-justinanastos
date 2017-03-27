@@ -21,52 +21,52 @@ const parserOptions = { ecmaVersion: 6, sourceType: 'module' };
 const ruleTester = new RuleTester();
 ruleTester.run('sort-imports', rule, {
 
-  valid: [
-    {
-      code: "import { a, b } from 'somewhere'",
-      parserOptions,
-    },
-    {
-      code: "import { a, B } from 'somewhere'",
-      parserOptions,
-      options: [{
-        ignoreCase: true,
-      }],
-    },
-    {
-      code: "import { B, a } from 'somewhere';",
-      parserOptions,
-    },
-    {
-      code: `
-        import { a, b } from 'somewhere'
-        import React from 'react';
-      `,
-      parserOptions,
-    },
-  ],
-
   invalid: [
     {
+      parserOptions,
       code: "import { b, a } from 'somewhere';",
       errors: ["Member 'a' of the import declaration should be sorted alphabetically."],
       output: "import { a, b } from 'somewhere';",
-      parserOptions,
     },
     {
+      parserOptions,
       code: "import { B, a } from 'somewhere';",
       errors: ["Member 'a' of the import declaration should be sorted alphabetically."],
       options: [{
         ignoreCase: true,
       }],
       output: "import { a, B } from 'somewhere';",
-      parserOptions,
     },
     {
+      parserOptions,
       code: "import React, { b, a } from 'somewhere'",
       errors: ["Member 'a' of the import declaration should be sorted alphabetically."],
       output: "import React, { a, b } from 'somewhere'",
+    },
+  ],
+
+  valid: [
+    {
       parserOptions,
+      code: "import { a, b } from 'somewhere'",
+    },
+    {
+      parserOptions,
+      code: "import { a, B } from 'somewhere'",
+      options: [{
+        ignoreCase: true,
+      }],
+    },
+    {
+      parserOptions,
+      code: "import { B, a } from 'somewhere';",
+    },
+    {
+      parserOptions,
+      code: `
+        import { a, b } from 'somewhere'
+        import React from 'react';
+      `,
     },
   ],
 });

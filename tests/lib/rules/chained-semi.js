@@ -19,6 +19,188 @@ const RuleTester = require('eslint').RuleTester;
 const ruleTester = new RuleTester();
 ruleTester.run('chained-semi', rule, {
 
+  invalid: [
+    {
+      code: `
+        var obj = a
+          .b
+          .c()
+          ;
+      `,
+      errors: [
+        'chained calls from \'a\' must have a semicolon on it\'s own line at the same indent as the starting call',
+      ],
+      output: `
+        var obj = a
+          .b
+          .c()
+        ;
+      `,
+    },
+    {
+      code: `
+        var obj = a
+          .b
+          .c();
+      `,
+      errors: [
+        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
+      ],
+      output: `
+        var obj = a
+          .b
+          .c()
+        ;
+      `,
+    },
+    {
+      code: `
+        a
+          .b
+          .c()
+          ;
+      `,
+      errors: [
+        'chained calls from \'a\' must have a semicolon on it\'s own line at the same indent as the starting call',
+      ],
+      output: `
+        a
+          .b
+          .c()
+        ;
+      `,
+    },
+    {
+      code: `
+        a
+          .b
+          .c();
+      `,
+      errors: [
+        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
+      ],
+      output: `
+        a
+          .b
+          .c()
+        ;
+      `,
+    },
+    {
+      code: `
+        a
+          .b
+          .c(function(d) {
+            return d.e();
+          });
+      `,
+      errors: [
+        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
+      ],
+      output: `
+        a
+          .b
+          .c(function(d) {
+            return d.e();
+          })
+        ;
+      `,
+    },
+    {
+      code: `
+        a
+          .b
+          .c(function(d) {
+            return d.e();
+          });
+      `,
+      errors: [
+        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
+      ],
+      output: `
+        a
+          .b
+          .c(function(d) {
+            return d.e();
+          })
+        ;
+      `,
+    },
+    {
+      code: `
+        a
+          .b
+          .c(function(d) {
+            return d
+              .e();
+          })
+        ;
+      `,
+      errors: [
+        'chained calls from \'d\' must have the semicolon on it\'s own line after all statements',
+      ],
+      output: `
+        a
+          .b
+          .c(function(d) {
+            return d
+              .e()
+            ;
+          })
+        ;
+      `,
+    },
+    {
+      code: `
+        a
+          .b
+          .c(function(d) {
+            return d
+              .e();
+          });
+      `,
+      errors: [
+        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
+        'chained calls from \'d\' must have the semicolon on it\'s own line after all statements',
+      ],
+      output: `
+        a
+          .b
+          .c(function(d) {
+            return d
+              .e()
+            ;
+          })
+        ;
+      `,
+    },
+    {
+      code: `
+        a
+          .b
+          .c(function(d) {
+            return d
+              .e();
+          })
+          ;
+      `,
+      errors: [
+        'chained calls from \'a\' must have a semicolon on it\'s own line at the same indent as the starting call',
+        'chained calls from \'d\' must have the semicolon on it\'s own line after all statements',
+      ],
+      output: `
+        a
+          .b
+          .c(function(d) {
+            return d
+              .e()
+            ;
+          })
+        ;
+      `,
+    },
+  ],
+
   valid: [
     'var obj = something.something();',
     `
@@ -111,187 +293,5 @@ ruleTester.run('chained-semi', rule, {
           .c()
       );
     `,
-  ],
-
-  invalid: [
-    // {
-    //   code: `
-    //     var obj = a
-    //       .b
-    //       .c()
-    //       ;
-    //   `,
-    //   errors: [
-    //     'chained calls from \'a\' must have a semicolon on it\'s own line at the same indent as the starting call',
-    //   ],
-    //   output: `
-    //     var obj = a
-    //       .b
-    //       .c()
-    //     ;
-    //   `,
-    // },
-    {
-      code: `
-        var obj = a
-          .b
-          .c();
-      `,
-      errors: [
-        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
-      ],
-      output: `
-        var obj = a
-          .b
-          .c()
-        ;
-      `,
-    },
-    {
-      code: `
-        a
-          .b
-          .c()
-          ;
-      `,
-      errors: [
-        'chained calls from \'a\' must have a semicolon on it\'s own line at the same indent as the starting call',
-      ],
-      output: `
-        a
-          .b
-          .c()
-        ;
-      `,
-    },
-    {
-      code: `
-        a
-          .b
-          .c();
-      `,
-      errors: [
-        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
-      ],
-      output: `
-        a
-          .b
-          .c()
-        ;
-      `,
-    },
-    {
-      code: `
-        a
-          .b
-          .c(function(d) {
-            return d.e();
-          });
-      `,
-      errors: [
-        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
-      ],
-      output: `
-        a
-          .b
-          .c(function(d) {
-            return d.e();
-          })
-        ;
-      `,
-    },
-    {
-      code: `
-        a
-          .b
-          .c(function(d) {
-            return d.e();
-          });
-      `,
-      errors: [
-        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
-      ],
-      output: `
-        a
-          .b
-          .c(function(d) {
-            return d.e();
-          })
-        ;
-      `,
-    },
-    {
-      code: `
-        a
-          .b
-          .c(function(d) {
-            return d
-              .e();
-          })
-        ;
-      `,
-      errors: [
-        'chained calls from \'d\' must have the semicolon on it\'s own line after all statements',
-      ],
-      output: `
-        a
-          .b
-          .c(function(d) {
-            return d
-              .e()
-            ;
-          })
-        ;
-      `,
-    },
-    {
-      code: `
-        a
-          .b
-          .c(function(d) {
-            return d
-              .e();
-          });
-      `,
-      errors: [
-        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
-        'chained calls from \'d\' must have the semicolon on it\'s own line after all statements',
-      ],
-      output: `
-        a
-          .b
-          .c(function(d) {
-            return d
-              .e()
-            ;
-          })
-        ;
-      `,
-    },
-    {
-      code: `
-        a
-          .b
-          .c(function(d) {
-            return d
-              .e();
-          })
-          ;
-      `,
-      errors: [
-        'chained calls from \'a\' must have a semicolon on it\'s own line at the same indent as the starting call',
-        'chained calls from \'d\' must have the semicolon on it\'s own line after all statements',
-      ],
-      output: `
-        a
-          .b
-          .c(function(d) {
-            return d
-              .e()
-            ;
-          })
-        ;
-      `,
-    },
   ],
 });

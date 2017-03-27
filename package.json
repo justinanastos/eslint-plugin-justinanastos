@@ -10,8 +10,10 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "lint": "eslint ./",
-    "test": "mocha tests --recursive"
+    "lint": "eslint --format 'node_modules/eslint-friendly-formatter' --max-warnings 0 lib/ tests/",
+    "mocha": "mocha tests --recursive",
+    "prelint": "npm link && npm link eslint-plugin-justinanastos",
+    "test": "run-p mocha lint"
   },
   "files": [
     "LICENSE",
@@ -32,9 +34,15 @@
   "devDependencies": {
     "babel-eslint": "^7.1.1",
     "eslint": "^3.18.0",
+    "eslint-config-airbnb": "^14.1.0",
     "eslint-config-brooklyn": "git+ssh://git@code.wds.io/brooklyn/eslint-config-brooklyn.git#v3.0.0",
+    "eslint-friendly-formatter": "2.0.7",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
     "has": "^1.0.1",
-    "mocha": "^3.2.0"
+    "mocha": "^3.2.0",
+    "npm-run-all": "^4.0.2"
   },
   "peerDependencies": {
     "eslint": ">=3.16.0"

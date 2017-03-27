@@ -19,20 +19,6 @@ const RuleTester = require('eslint').RuleTester;
 const ruleTester = new RuleTester();
 ruleTester.run('switch-braces', rule, {
 
-  valid: [
-    `
-      switch (a) {
-        case 1: {}
-      }
-    `,
-    `
-      switch (a) {
-        case 1: {}
-        default: {}
-      }
-    `,
-  ],
-
   invalid: [
     {
       code: `
@@ -92,5 +78,19 @@ ruleTester.run('switch-braces', rule, {
     //   code: 'if (a !== true) {}',
     //   errors: ["'a' must use a shortcut, not an explicit comparission to 'true'"],
     // },
+  ],
+
+  valid: [
+    `
+      switch (a) {
+        case 1: {}
+      }
+    `,
+    `
+      switch (a) {
+        case 1: {}
+        default: {}
+      }
+    `,
   ],
 });

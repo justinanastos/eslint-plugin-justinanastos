@@ -16,29 +16,23 @@
 module.exports = {
   root: true,
 
-  extends: 'eslint-config-brooklyn',
-
-  parser: 'babel-eslint',
+  extends: [
+    "airbnb",
+    "plugin:justinanastos/recommended"
+  ],
 
   env: {
-    browser: true,
     es6: true,
-    jasmine: true,
     node: true,
   },
 
-  globals: {
-    __CLIENT__: true,
-    __DEV__: true,
-    __PRODUCTION__: true,
-    __SERVER__: true,
-    config: true
-  },
+  plugins: [
+    "eslint-plugin-justinanastos"
+  ],
 
   rules: {
-    'class-methods-use-this': 'off',
     'comma-dangle': [
-      'error',
+      'warn',
       {
         arrays: "always-multiline",
         exports: "always-multiline",
@@ -48,43 +42,10 @@ module.exports = {
       }
     ],
     'func-names': 'off',
-    'jsx-a11y/anchor-has-content': 'off',
-    'import/default': 'error',
-    'import/extensions': ['error', 'never'],
-    'import/named': 'error',
-    'import/namespace': 'error',
-    'import/no-dynamic-require': 'off',
-    'import/no-extraneous-dependencies': [
-      'error', {
-        devDependencies: true
-      }
-    ],
-    'import/no-named-as-default': 'off',
-    'import/no-unresolved': ['error', { 'caseSensitive': true }],
-    'import/prefer-default-export': 'off',
     'new-cap': 'off',
-    'no-console': 'off',
-    'react/no-unused-prop-types': 'off',
-    'react/jsx-filename-extension': 'off',
-    'react/require-extension': 'off',
-    'strict': ['error', 'global'],
-  },
-
-  settings: {
-    'import/resolver': {
-      node: {
-        extentions: [
-          '.js',
-          '.jsx'
-        ],
-        paths: [
-          'config'
-        ],
-      },
-    },
-
-    react: {
-      version: '15.1.0'
-    }
+    'no-multi-assign': 'off',
+    'no-loop-func': 'off',
+    'no-console': 'warn',
+    'strict': ['warn', 'global'],
   }
 };

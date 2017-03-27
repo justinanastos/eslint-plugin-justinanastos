@@ -19,18 +19,6 @@ const RuleTester = require('eslint').RuleTester;
 const ruleTester = new RuleTester();
 ruleTester.run('shortcuts', rule, {
 
-  valid: [
-    'if (a.length === 0) {}',
-    'if (a.length === 1) {}',
-    'if (a.length > 0) {}',
-    'if (a) {}',
-    'if (!a) {}',
-    'if (a === "") {}',
-    'if (a === 0) {}',
-    'if (a !== 0) {}',
-    'if (a > 3) {}',
-  ],
-
   invalid: [
     {
       code: 'if (a.length) {}',
@@ -56,5 +44,17 @@ ruleTester.run('shortcuts', rule, {
       code: 'if (a !== true) {}',
       errors: ["'a' must use a shortcut, not an explicit comparission to 'true'"],
     },
+  ],
+
+  valid: [
+    'if (a.length === 0) {}',
+    'if (a.length === 1) {}',
+    'if (a.length > 0) {}',
+    'if (a) {}',
+    'if (!a) {}',
+    'if (a === "") {}',
+    'if (a === 0) {}',
+    'if (a !== 0) {}',
+    'if (a > 3) {}',
   ],
 });
