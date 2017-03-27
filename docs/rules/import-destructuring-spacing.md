@@ -22,11 +22,11 @@ This rule has an object option:
 
 - `indent: 2` (default) use this many spaces to indent.
 
-    This is here because import specifiers are not enforced by [`indent`](http://eslint.org/docs/rules/key-spacing).
+    This is here because import specifiers are not enforced by [`indent`](http://eslint.org/docs/rules/indent).
 
 - `enforceIndentation: true` (default) enforce indentiation has this many spaces on specifiers on their own line.
 
-    This is here because import specifiers are not enforced by [`indent`](http://eslint.org/docs/rules/key-spacing).
+    This is here because import specifiers are not enforced by [`indent`](http://eslint.org/docs/rules/indent).
 
 ## `maxProperties`
 
