@@ -11,6 +11,23 @@
 const rule = require('../../../lib/rules/chained-semi');
 const RuleTester = require('eslint').RuleTester;
 
+function wrongLineError(name) {
+  return {
+    message: `chained calls from '${name}' must have the semicolon on it's own line after all statements`,
+  };
+}
+
+function wrongIndentError(name) {
+  return {
+    message: `chained calls from '${name}' must have a semicolon on it's own line at the same indent as the starting call`,
+  };
+}
+
+function lineAboveError() {
+  return {
+    message: 'semicolon should not be on it\'s own line',
+  };
+}
 
 //------------------------------------------------------------------------------
 // Tests
@@ -18,191 +35,41 @@ const RuleTester = require('eslint').RuleTester;
 
 const ruleTester = new RuleTester();
 ruleTester.run('chained-semi', rule, {
-
-  invalid: [
-    {
-      code: `
-        var obj = a
-          .b
-          .c()
-          ;
-      `,
-      errors: [
-        'chained calls from \'a\' must have a semicolon on it\'s own line at the same indent as the starting call',
-      ],
-      output: `
-        var obj = a
-          .b
-          .c()
-        ;
-      `,
-    },
-    {
-      code: `
-        var obj = a
-          .b
-          .c();
-      `,
-      errors: [
-        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
-      ],
-      output: `
-        var obj = a
-          .b
-          .c()
-        ;
-      `,
-    },
-    {
-      code: `
-        a
-          .b
-          .c()
-          ;
-      `,
-      errors: [
-        'chained calls from \'a\' must have a semicolon on it\'s own line at the same indent as the starting call',
-      ],
-      output: `
-        a
-          .b
-          .c()
-        ;
-      `,
-    },
-    {
-      code: `
-        a
-          .b
-          .c();
-      `,
-      errors: [
-        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
-      ],
-      output: `
-        a
-          .b
-          .c()
-        ;
-      `,
-    },
-    {
-      code: `
-        a
-          .b
-          .c(function(d) {
-            return d.e();
-          });
-      `,
-      errors: [
-        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
-      ],
-      output: `
-        a
-          .b
-          .c(function(d) {
-            return d.e();
-          })
-        ;
-      `,
-    },
-    {
-      code: `
-        a
-          .b
-          .c(function(d) {
-            return d.e();
-          });
-      `,
-      errors: [
-        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
-      ],
-      output: `
-        a
-          .b
-          .c(function(d) {
-            return d.e();
-          })
-        ;
-      `,
-    },
-    {
-      code: `
-        a
-          .b
-          .c(function(d) {
-            return d
-              .e();
-          })
-        ;
-      `,
-      errors: [
-        'chained calls from \'d\' must have the semicolon on it\'s own line after all statements',
-      ],
-      output: `
-        a
-          .b
-          .c(function(d) {
-            return d
-              .e()
-            ;
-          })
-        ;
-      `,
-    },
-    {
-      code: `
-        a
-          .b
-          .c(function(d) {
-            return d
-              .e();
-          });
-      `,
-      errors: [
-        'chained calls from \'a\' must have the semicolon on it\'s own line after all statements',
-        'chained calls from \'d\' must have the semicolon on it\'s own line after all statements',
-      ],
-      output: `
-        a
-          .b
-          .c(function(d) {
-            return d
-              .e()
-            ;
-          })
-        ;
-      `,
-    },
-    {
-      code: `
-        a
-          .b
-          .c(function(d) {
-            return d
-              .e();
-          })
-          ;
-      `,
-      errors: [
-        'chained calls from \'a\' must have a semicolon on it\'s own line at the same indent as the starting call',
-        'chained calls from \'d\' must have the semicolon on it\'s own line after all statements',
-      ],
-      output: `
-        a
-          .b
-          .c(function(d) {
-            return d
-              .e()
-            ;
-          })
-        ;
-      `,
-    },
-  ],
-
+  // eslint-disable-next-line justinanastos/alpha-object-expression
   valid: [
-    'var obj = something.something();',
+    'var obj = a.b();',
+    `
+      context.report({
+        message: "semicolon should not be on it's own line",
+        node: trailingSemiToken,
+      });
+    `,
+    `
+      var property = a.b[
+        c.d.e() + 1
+      ];
+    `,
+    `
+      function fix(fixer) {
+        return fixer.removeRange([
+          sourceCode.getTokenBefore(trailingSemiToken, context).range[1],
+          trailingSemiToken.range[0],
+        ]);
+      }
+    `,
+    {
+      code: `
+        context.report({
+          fix,
+          node,
+          data: {
+            name: findMemberExpressionName(node, context),
+          },
+          message: "chained calls from '{{name}}' must have the semicolon on it's own line after all statements",
+        });
+      `,
+      parserOptions: { ecmaVersion: 6 },
+    },
     `
       var obj = something
         .something()
@@ -226,19 +93,6 @@ ruleTester.run('chained-semi', rule, {
         .something()
       ;
     `,
-    {
-      code: `
-        const commands = [{
-          openSidebar() {
-            this.waitForElementVisible('@menuButton')
-              .api.pause(1000); // This delay is needed due to the animation in the sidebar menu.
-
-            return this.click('@menuButton');
-          },
-        }];
-      `,
-      parserOptions: { ecmaVersion: 6 },
-    },
     `
       something
         .something
@@ -293,5 +147,243 @@ ruleTester.run('chained-semi', rule, {
           .c()
       );
     `,
+  ],
+
+  invalid: [
+    {
+      code: `
+        var obj = a
+          .b()
+          .c()
+          .d()
+          ;
+      `,
+      errors: [
+        wrongIndentError('a'),
+      ],
+      output: `
+        var obj = a
+          .b()
+          .c()
+          .d()
+        ;
+      `,
+    },
+    {
+      code: `
+        var obj = a
+          .b
+          .c();
+      `,
+      errors: [
+        wrongLineError('a'),
+      ],
+      output: `
+        var obj = a
+          .b
+          .c()
+        ;
+      `,
+    },
+    {
+      code: `
+        a
+          .b
+          .c()
+          ;
+      `,
+      errors: [
+        wrongIndentError('a'),
+      ],
+      output: `
+        a
+          .b
+          .c()
+        ;
+      `,
+    },
+    {
+      code: `
+        a
+          .b
+          .c();
+      `,
+      errors: [
+        wrongLineError('a'),
+      ],
+      output: `
+        a
+          .b
+          .c()
+        ;
+      `,
+    },
+    {
+      code: `
+        a
+          .b
+          .c(function(d) {
+            return d.e();
+          });
+      `,
+      errors: [
+        wrongLineError('a'),
+      ],
+      output: `
+        a
+          .b
+          .c(function(d) {
+            return d.e();
+          })
+        ;
+      `,
+    },
+    {
+      code: `
+        a
+          .b
+          .c(function(d) {
+            return d.e();
+          });
+      `,
+      errors: [
+        wrongLineError('a'),
+      ],
+      output: `
+        a
+          .b
+          .c(function(d) {
+            return d.e();
+          })
+        ;
+      `,
+    },
+    {
+      code: `
+        a
+          .b
+          .c(function(d) {
+            return d
+              .e();
+          })
+        ;
+      `,
+      errors: [
+        wrongLineError('d'),
+      ],
+      output: `
+        a
+          .b
+          .c(function(d) {
+            return d
+              .e()
+            ;
+          })
+        ;
+      `,
+    },
+    {
+      code: `
+        a
+          .b
+          .c(function(d) {
+            return d
+              .e();
+          });
+      `,
+      errors: [
+        wrongLineError('a'),
+        wrongLineError('d'),
+      ],
+      output: `
+        a
+          .b
+          .c(function(d) {
+            return d
+              .e()
+            ;
+          })
+        ;
+      `,
+    },
+    {
+      code: `
+        a
+          .b
+          .c(function(d) {
+            return d
+              .e();
+          })
+          ;
+      `,
+      errors: [
+        wrongIndentError('a'),
+        wrongLineError('d'),
+      ],
+      output: `
+        a
+          .b
+          .c(function(d) {
+            return d
+              .e()
+            ;
+          })
+        ;
+      `,
+    },
+    {
+      code: `
+        const commands = [{
+          openSidebar() {
+            this.waitForElementVisible('@menuButton')
+              .api.pause(1000); // This delay is needed due to the animation in the sidebar menu.
+
+            return this.click('@menuButton');
+          },
+        }];
+      `,
+      errors: [
+        wrongLineError('this'),
+      ],
+      output: `
+        const commands = [{
+          openSidebar() {
+            this.waitForElementVisible('@menuButton')
+              .api.pause(1000)
+            ; // This delay is needed due to the animation in the sidebar menu.
+
+            return this.click('@menuButton');
+          },
+        }];
+      `,
+      parserOptions: { ecmaVersion: 6 },
+    },
+    {
+      code: `
+        context.report({
+          fix,
+          node,
+          data: {
+            name: findMemberExpressionName(node, context),
+          },
+          message: "chained calls from '{{name}}' must have the semicolon on it's own line after all statements",
+        })
+        ;
+      `,
+      errors: [
+        lineAboveError(),
+      ],
+      output: `
+        context.report({
+          fix,
+          node,
+          data: {
+            name: findMemberExpressionName(node, context),
+          },
+          message: "chained calls from '{{name}}' must have the semicolon on it's own line after all statements",
+        });
+      `,
+      parserOptions: { ecmaVersion: 6 },
+    },
   ],
 });
