@@ -20,6 +20,92 @@ const parserOptions = { ecmaVersion: 6, sourceType: 'module' };
 
 const ruleTester = new RuleTester();
 ruleTester.run('import-destructuring-spacing', rule, {
+  // eslint-disable-next-line justinanastos/alpha-object-expression
+  valid: [
+    {
+      parserOptions,
+      code: "import { a , b, c, d, e, f, g, h } from 'somewhere'",
+    },
+    {
+      parserOptions,
+      code: "import { a, b, c, d } from 'somewhere'",
+      options: [{
+        collapse: true,
+        maxProperties: 5,
+      }],
+    },
+    {
+      parserOptions,
+      code: "import { a, b } from 'somewhere'",
+      options: [{
+        collapse: true,
+        maxProperties: 3,
+      }],
+    },
+    {
+      parserOptions,
+      code: `
+        import {
+          a,
+          b,
+          c
+        } from 'somewhere'
+      `,
+      options: [{
+        collapse: true,
+        maxProperties: 3,
+      }],
+    },
+    {
+      parserOptions,
+      code: `
+        import {
+          a,
+          b,
+          c
+        } from 'somewhere'
+      `,
+      options: [{
+        maxProperties: 3,
+      }],
+    },
+    {
+      parserOptions,
+      code: "import {a, b} from 'somewhere'",
+      options: [{
+        maxProperties: 3,
+      }],
+    },
+    {
+      parserOptions,
+      code: `
+        import type { FetchLayoutPageDiffActionCreator }
+          // test
+          from '../../../actions/layout-page-action/fetch-page-diff-action';
+      `,
+      parser: 'babel-eslint',
+    },
+    {
+      parserOptions,
+      code: `
+        import type { FetchLayoutPageDiffActionCreator }
+          from '../../../actions/layout-page-action/fetch-page-diff-action';
+      `,
+      parser: 'babel-eslint',
+    },
+    {
+      parserOptions,
+      code: "import type { FetchLayoutPageDiffActionCreator } from '../../../actions/layout-page-action/fetch-page-diff-action'",
+      parser: 'babel-eslint',
+    },
+    {
+      parserOptions,
+      code: `
+        import FetchLayoutPageDiffActionCreator
+          from '../../../actions/layout-page-action/fetch-page-diff-action';
+      `,
+    },
+  ],
 
   invalid: [
     {
@@ -231,92 +317,6 @@ ruleTester.run('import-destructuring-spacing', rule, {
           c,
           d,
         } from 'somewhere'
-      `,
-    },
-  ],
-
-  valid: [
-    {
-      parserOptions,
-      code: "import { a , b, c, d, e, f, g, h } from 'somewhere'",
-    },
-    {
-      parserOptions,
-      code: "import { a, b, c, d } from 'somewhere'",
-      options: [{
-        collapse: true,
-        maxProperties: 5,
-      }],
-    },
-    {
-      parserOptions,
-      code: "import { a, b } from 'somewhere'",
-      options: [{
-        collapse: true,
-        maxProperties: 3,
-      }],
-    },
-    {
-      parserOptions,
-      code: `
-        import {
-          a,
-          b,
-          c
-        } from 'somewhere'
-      `,
-      options: [{
-        collapse: true,
-        maxProperties: 3,
-      }],
-    },
-    {
-      parserOptions,
-      code: `
-        import {
-          a,
-          b,
-          c
-        } from 'somewhere'
-      `,
-      options: [{
-        maxProperties: 3,
-      }],
-    },
-    {
-      parserOptions,
-      code: "import {a, b} from 'somewhere'",
-      options: [{
-        maxProperties: 3,
-      }],
-    },
-    {
-      parserOptions,
-      code: `
-        import type { FetchLayoutPageDiffActionCreator }
-          // test
-          from '../../../actions/layout-page-action/fetch-page-diff-action';
-      `,
-      parser: 'babel-eslint',
-    },
-    {
-      parserOptions,
-      code: `
-        import type { FetchLayoutPageDiffActionCreator }
-          from '../../../actions/layout-page-action/fetch-page-diff-action';
-      `,
-      parser: 'babel-eslint',
-    },
-    {
-      parserOptions,
-      code: "import type { FetchLayoutPageDiffActionCreator } from '../../../actions/layout-page-action/fetch-page-diff-action'",
-      parser: 'babel-eslint',
-    },
-    {
-      parserOptions,
-      code: `
-        import FetchLayoutPageDiffActionCreator
-          from '../../../actions/layout-page-action/fetch-page-diff-action';
       `,
     },
   ],
