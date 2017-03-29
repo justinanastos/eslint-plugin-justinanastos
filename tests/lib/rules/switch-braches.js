@@ -58,26 +58,6 @@ ruleTester.run('switch-braces', rule, {
         'switch cases must be surrounded with curly brackets',
       ],
     },
-    // {
-    //   code: 'if (!a.length) {}',
-    //   errors: ["'a.length' must use an explicit comparission, not a shortcut"],
-    // },
-    // {
-    //   code: 'if (a === true) {}',
-    //   errors: ["'a' must use a shortcut, not an explicit comparission to 'true'"],
-    // },
-    // {
-    //   code: 'if (a === false) {}',
-    //   errors: ["'a' must use a shortcut, not an explicit comparission to 'false'"],
-    // },
-    // {
-    //   code: 'if (a !== false) {}',
-    //   errors: ["'a' must use a shortcut, not an explicit comparission to 'false'"],
-    // },
-    // {
-    //   code: 'if (a !== true) {}',
-    //   errors: ["'a' must use a shortcut, not an explicit comparission to 'true'"],
-    // },
   ],
 
   valid: [
