@@ -18,6 +18,42 @@ const RuleTester = require('eslint').RuleTester;
 
 const ruleTester = new RuleTester();
 ruleTester.run('alpha-object-expression', rule, {
+  // eslint-disable-next-line justinanastos/alpha-object-expression
+  valid: [
+    'var obj = { a: true, b: false }',
+    {
+      code: 'var obj = { b, a: true }',
+      parserOptions: { ecmaVersion: 6 },
+    },
+    {
+      code: 'var obj = { a: true, b }',
+      options: [{
+        favorShorthand: false,
+      }],
+      parserOptions: { ecmaVersion: 6 },
+    },
+    {
+      code: 'var obj = { B: true, A: true }',
+      options: [{
+        ignoreAllCapitalized: true,
+      }],
+      parserOptions: { ecmaVersion: 6 },
+    },
+    {
+      code: 'React.createClass({ d: true, a: true })',
+    },
+    {
+      code: `
+        import { Component } from 'React';
+
+        class A extends Component {
+          componentWillMount() {}
+          componentDidMount() {}
+        }
+      `,
+      parserOptions: { ecmaVersion: 6, sourceType: 'module' },
+    },
+  ],
 
   invalid: [
     {
@@ -101,42 +137,6 @@ ruleTester.run('alpha-object-expression', rule, {
       ],
       output: 'var obj = { a: true, b() {} }',
       parserOptions: { ecmaVersion: 6 },
-    },
-  ],
-
-  valid: [
-    'var obj = { a: true, b: false }',
-    {
-      code: 'var obj = { b, a: true }',
-      parserOptions: { ecmaVersion: 6 },
-    },
-    {
-      code: 'var obj = { a: true, b }',
-      options: [{
-        favorShorthand: false,
-      }],
-      parserOptions: { ecmaVersion: 6 },
-    },
-    {
-      code: 'var obj = { B: true, A: true }',
-      options: [{
-        ignoreAllCapitalized: true,
-      }],
-      parserOptions: { ecmaVersion: 6 },
-    },
-    {
-      code: 'React.createClass({ d: true, a: true })',
-    },
-    {
-      code: `
-        import { Component } from 'React';
-
-        class A extends Component {
-          componentWillMount() {}
-          componentDidMount() {}
-        }
-      `,
-      parserOptions: { ecmaVersion: 6, sourceType: 'module' },
     },
   ],
 });
