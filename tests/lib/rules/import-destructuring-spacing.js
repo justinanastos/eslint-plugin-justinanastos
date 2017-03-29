@@ -11,6 +11,25 @@
 const rule = require('../../../lib/rules/import-destructuring-spacing');
 const RuleTester = require('eslint').RuleTester;
 
+//------------------------------------------------------------------------------
+// Error messages
+//------------------------------------------------------------------------------
+
+function missingLineBreakError(first, second) {
+  return `missing line break between '${first}' and '${second}'`;
+}
+
+function openingBracketError(text) {
+  return `line break missing between opening bracket and '${text}'`;
+}
+
+function closingBracketError(text) {
+  return `line break missing between '${text}' and closing bracket`;
+}
+
+function unncessaryLineBreakError() {
+  return 'unncessary line breaks in import statement';
+}
 
 //------------------------------------------------------------------------------
 // Tests
@@ -24,23 +43,13 @@ ruleTester.run('import-destructuring-spacing', rule, {
   valid: [
     {
       parserOptions,
-      code: "import { a , b, c, d, e, f, g, h } from 'somewhere'",
+      code: "import { a, b, c } from 'somewhere'",
+      options: [3],
     },
     {
       parserOptions,
-      code: "import { a, b, c, d } from 'somewhere'",
-      options: [{
-        collapse: true,
-        maxProperties: 5,
-      }],
-    },
-    {
-      parserOptions,
-      code: "import { a, b } from 'somewhere'",
-      options: [{
-        collapse: true,
-        maxProperties: 3,
-      }],
+      code: "import { a, b, c } from 'somewhere'",
+      options: [4],
     },
     {
       parserOptions,
@@ -51,10 +60,7 @@ ruleTester.run('import-destructuring-spacing', rule, {
           c
         } from 'somewhere'
       `,
-      options: [{
-        collapse: true,
-        maxProperties: 3,
-      }],
+      options: [2],
     },
     {
       parserOptions,
@@ -65,45 +71,25 @@ ruleTester.run('import-destructuring-spacing', rule, {
           c
         } from 'somewhere'
       `,
-      options: [{
-        maxProperties: 3,
-      }],
-    },
-    {
-      parserOptions,
-      code: "import {a, b} from 'somewhere'",
-      options: [{
-        maxProperties: 3,
-      }],
+      options: [2],
     },
     {
       parserOptions,
       code: `
-        import type { FetchLayoutPageDiffActionCreator }
-          // test
-          from '../../../actions/layout-page-action/fetch-page-diff-action';
+        import { a, b, c } from 'somewhere'
       `,
-      parser: 'babel-eslint',
+      options: ['multiline'],
     },
     {
       parserOptions,
       code: `
-        import type { FetchLayoutPageDiffActionCreator }
-          from '../../../actions/layout-page-action/fetch-page-diff-action';
+        import {
+          a,
+          b,
+          c
+        } from 'somewhere'
       `,
-      parser: 'babel-eslint',
-    },
-    {
-      parserOptions,
-      code: "import type { FetchLayoutPageDiffActionCreator } from '../../../actions/layout-page-action/fetch-page-diff-action'",
-      parser: 'babel-eslint',
-    },
-    {
-      parserOptions,
-      code: `
-        import FetchLayoutPageDiffActionCreator
-          from '../../../actions/layout-page-action/fetch-page-diff-action';
-      `,
+      options: ['multiline'],
     },
   ],
 
@@ -111,39 +97,15 @@ ruleTester.run('import-destructuring-spacing', rule, {
     {
       parserOptions,
       code: `
-        import type { a }
-          from 'somewhere';
+        import { a, b, c } from 'somewhere'
       `,
       errors: [
-        'line break missing between opening bracket and \'a\'',
-        'line break missing between \'a\' and closing bracket',
+        openingBracketError('a'),
+        missingLineBreakError('a', 'b'),
+        missingLineBreakError('b', 'c'),
+        closingBracketError('c'),
       ],
-      options: [{
-        enforceIndentation: false,
-        maxProperties: 1,
-      }],
-      output: `
-        import type {
-          a
-        } from 'somewhere';
-      `,
-      parser: 'babel-eslint',
-    },
-    {
-      parserOptions,
-      code: `
-        import {a, b, c} from 'somewhere'
-      `,
-      errors: [
-        'line break missing between opening bracket and \'a\'',
-        'missing line break between \'a\' and \'b\'',
-        'missing line break between \'b\' and \'c\'',
-        'line break missing between \'c\' and closing bracket',
-      ],
-      options: [{
-        enforceIndentation: false,
-        maxProperties: 3,
-      }],
+      options: [1],
       output: `
         import {
           a,
@@ -155,169 +117,203 @@ ruleTester.run('import-destructuring-spacing', rule, {
     {
       parserOptions,
       code: `
-        import {a,
-          b,
-        c} from 'somewhere'
-      `,
-      errors: [
-        'line break missing between opening bracket and \'a\'',
-        'line break missing between \'c\' and closing bracket',
-        'incorrect indentation for \'c\'',
-      ],
-      options: [{
-        maxProperties: 3,
-      }],
-      output: `
-        import {
-          a,
-          b,
-          c
-        } from 'somewhere'
-      `,
-    },
-    {
-      parserOptions,
-      code: `
-        import {a,
-          b,
-        c,} from 'somewhere'
-      `,
-      errors: [
-        'line break missing between opening bracket and \'a\'',
-        'line break missing between \'c\' and closing bracket',
-        'incorrect indentation for \'c\'',
-      ],
-      options: [{
-        maxProperties: 3,
-      }],
-      output: `
-        import {
-          a,
-          b,
-          c,
-        } from 'somewhere'
-      `,
-    },
-    {
-      parserOptions,
-      code: `
-        import { a, b, c, d, e, f, g, h } from 'somewhere'
-      `,
-      errors: [
-        'line break missing between opening bracket and \'a\'',
-        'missing line break between \'a\' and \'b\'',
-        'missing line break between \'b\' and \'c\'',
-        'missing line break between \'c\' and \'d\'',
-        'missing line break between \'d\' and \'e\'',
-        'missing line break between \'e\' and \'f\'',
-        'missing line break between \'f\' and \'g\'',
-        'missing line break between \'g\' and \'h\'',
-        'line break missing between \'h\' and closing bracket',
-      ],
-      options: [{
-        maxProperties: 3,
-      }],
-      output: `
-        import {
-          a,
-          b,
-          c,
-          d,
-          e,
-          f,
-          g,
-          h
-        } from 'somewhere'
-      `,
-    },
-    {
-      parserOptions,
-      code: `
-        import {
-          a, b
-        } from 'somewhere'
-      `,
-      errors: [
-        'missing line break between \'a\' and \'b\'',
-      ],
-      options: [{
-        collapse: true,
-        maxProperties: 1,
-      }],
-      output: `
         import {
           a,
           b
         } from 'somewhere'
       `,
-    },
-    {
-      parserOptions,
-      code: `
-        import {
-          a,
-          b,
-          c,
-          d
-        } from 'somewhere'
-      `,
       errors: [
-        'unncessary line breaks in import statement',
+        unncessaryLineBreakError(),
       ],
-      options: [{
-        collapse: true,
-        maxProperties: 5,
-      }],
+      options: [3],
       output: `
-        import { a, b, c, d } from 'somewhere'
+        import { a, b } from 'somewhere'
       `,
     },
     {
       parserOptions,
       code: `
+        import { a, b, c } from 'somewhere'
+      `,
+      errors: [
+        openingBracketError('a'),
+        missingLineBreakError('a', 'b'),
+        missingLineBreakError('b', 'c'),
+        closingBracketError('c'),
+      ],
+      options: [2],
+      output: `
         import {
           a,
           b,
-          c,
-          d,
+          c
+        } from 'somewhere'
+      `,
+    },
+    {
+      parserOptions,
+      code: `
+        import {
+          a, b, c } from 'somewhere'
+      `,
+      errors: [
+        missingLineBreakError('a', 'b'),
+        missingLineBreakError('b', 'c'),
+        closingBracketError('c'),
+      ],
+      options: [2],
+      output: `
+        import {
+          a,
+          b,
+          c
+        } from 'somewhere'
+      `,
+    },
+    {
+      parserOptions,
+      code: `
+        import {
+          a, b, c } from 'somewhere'
+      `,
+      errors: [
+        unncessaryLineBreakError(),
+      ],
+      options: [3],
+      output: `
+        import { a, b, c } from 'somewhere'
+      `,
+    },
+    {
+      parserOptions,
+      code: `
+        import { a, b, c
         } from 'somewhere'
       `,
       errors: [
-        'unncessary line breaks in import statement',
+        unncessaryLineBreakError(),
       ],
-      options: [{
-        collapse: true,
-        maxProperties: 5,
-      }],
+      options: [3],
       output: `
-        import { a, b, c, d, } from 'somewhere'
+        import { a, b, c } from 'somewhere'
       `,
+    },
+    {
+      parserOptions,
+      code: `
+        import { a, b, c
+        } from 'somewhere'
+      `,
+      errors: [
+        openingBracketError('a'),
+        missingLineBreakError('a', 'b'),
+        missingLineBreakError('b', 'c'),
+      ],
+      options: [2],
     },
     {
       parserOptions,
       code: `
         import {
           a, b,
-          c, d,
+          c
         } from 'somewhere'
       `,
       errors: [
-        "missing line break between 'a' and 'b'",
-        "missing line break between 'c' and 'd'",
+        missingLineBreakError('a', 'b'),
       ],
-      options: [{
-        collapse: false,
-        maxProperties: 3,
-        multiline: true,
-      }],
-      output: `
+      options: ['multiline'],
+    },
+    {
+      parserOptions,
+      code: `
+        import {
+          a, b, c
+        } from 'somewhere'
+      `,
+      errors: [
+        missingLineBreakError('a', 'b'),
+        missingLineBreakError('b', 'c'),
+      ],
+      options: ['multiline'],
+    },
+    {
+      parserOptions,
+      code: `
         import {
           a,
           b,
-          c,
-          d,
+          c } from 'somewhere'
+      `,
+      errors: [
+        closingBracketError('c'),
+      ],
+      options: ['multiline'],
+    },
+    {
+      parserOptions,
+      code: `
+        import { a,
+          b,
+          c
         } from 'somewhere'
       `,
+      errors: [
+        openingBracketError('a'),
+      ],
+      options: ['multiline'],
+    },
+    {
+      parserOptions,
+      code: `
+        import { a,
+          b,
+          c
+        } from 'somewhere'
+      `,
+      errors: [
+        openingBracketError('a'),
+      ],
+      options: ['multiline'],
+    },
+    {
+      parserOptions,
+      code: `
+        import {
+          a,
+          b,
+          c } from 'somewhere'
+      `,
+      errors: [
+        closingBracketError('c'),
+      ],
+      options: [2],
+    },
+    {
+      parserOptions,
+      code: `
+        import { a,
+          b,
+          c
+        } from 'somewhere'
+      `,
+      errors: [
+        openingBracketError('a'),
+      ],
+      options: [2],
+    },
+    {
+      parserOptions,
+      code: `
+        import { a,
+          b,
+          c
+        } from 'somewhere'
+      `,
+      errors: [
+        openingBracketError('a'),
+      ],
+      options: [2],
     },
   ],
 });

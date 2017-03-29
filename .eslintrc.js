@@ -26,6 +26,7 @@ module.exports = {
         objects: "always-multiline",
       }
     ],
+    'no-use-before-define': ['warn', { functions: false }],
     'func-names': 'off',
     'new-cap': 'off',
     'no-multi-assign': 'off',
