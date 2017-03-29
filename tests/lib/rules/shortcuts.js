@@ -13,6 +13,18 @@ const RuleTester = require('eslint').RuleTester;
 
 
 //------------------------------------------------------------------------------
+// Helpers
+//------------------------------------------------------------------------------
+
+function explicitLengthComparisonError(name) {
+  return `'${name}.length' must use an explicit comparison, not a shortcut`;
+}
+
+function shortcutError(name, result) {
+  return `'${name}' must use a shortcut, not an explicit comparison to '${result}'`;
+}
+
+//------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
@@ -22,27 +34,39 @@ ruleTester.run('shortcuts', rule, {
   invalid: [
     {
       code: 'if (a.length) {}',
-      errors: ["'a.length' must use an explicit comparission, not a shortcut"],
+      errors: [
+        explicitLengthComparisonError('a'),
+      ],
     },
     {
       code: 'if (!a.length) {}',
-      errors: ["'a.length' must use an explicit comparission, not a shortcut"],
+      errors: [
+        explicitLengthComparisonError('a'),
+      ],
     },
     {
       code: 'if (a === true) {}',
-      errors: ["'a' must use a shortcut, not an explicit comparission to 'true'"],
+      errors: [
+        shortcutError('a', true),
+      ],
     },
     {
       code: 'if (a === false) {}',
-      errors: ["'a' must use a shortcut, not an explicit comparission to 'false'"],
+      errors: [
+        shortcutError('a', false),
+      ],
     },
     {
       code: 'if (a !== false) {}',
-      errors: ["'a' must use a shortcut, not an explicit comparission to 'false'"],
+      errors: [
+        shortcutError('a', false),
+      ],
     },
     {
       code: 'if (a !== true) {}',
-      errors: ["'a' must use a shortcut, not an explicit comparission to 'true'"],
+      errors: [
+        shortcutError('a', true),
+      ],
     },
   ],
 
