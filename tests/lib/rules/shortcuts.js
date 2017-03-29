@@ -30,6 +30,24 @@ function shortcutError(name, result) {
 
 const ruleTester = new RuleTester();
 ruleTester.run('shortcuts', rule, {
+  // eslint-disable-next-line justinanastos/alpha-object-expression
+  valid: [
+    'if (a.length == 0) {}',
+    'if (a.length === 0) {}',
+    'if (a.length == 1) {}',
+    'if (a.length === 1) {}',
+    'if (a.length > 0) {}',
+    'if (a) {}',
+    'if (!a) {}',
+    'if (a == "") {}',
+    'if (a === "") {}',
+    'if (a == 0) {}',
+    'if (a === 0) {}',
+    'if (a != 0) {}',
+    'if (a !== 0) {}',
+    'if (a > 3) {}',
+    'if (a < 3) {}',
+  ],
 
   invalid: [
     {
@@ -102,23 +120,5 @@ ruleTester.run('shortcuts', rule, {
       ],
       output: 'if (!a) {}',
     },
-  ],
-
-  valid: [
-    'if (a.length == 0) {}',
-    'if (a.length === 0) {}',
-    'if (a.length == 1) {}',
-    'if (a.length === 1) {}',
-    'if (a.length > 0) {}',
-    'if (a) {}',
-    'if (!a) {}',
-    'if (a == "") {}',
-    'if (a === "") {}',
-    'if (a == 0) {}',
-    'if (a === 0) {}',
-    'if (a != 0) {}',
-    'if (a !== 0) {}',
-    'if (a > 3) {}',
-    'if (a < 3) {}',
   ],
 });
