@@ -18,6 +18,20 @@ const RuleTester = require('eslint').RuleTester;
 
 const ruleTester = new RuleTester();
 ruleTester.run('switch-braces', rule, {
+  // eslint-disable-next-line justinanastos/alpha-object-expression
+  valid: [
+    `
+      switch (a) {
+        case 1: {}
+      }
+    `,
+    `
+      switch (a) {
+        case 1: {}
+        default: {}
+      }
+    `,
+  ],
 
   invalid: [
     {
@@ -58,19 +72,5 @@ ruleTester.run('switch-braces', rule, {
         'switch cases must be surrounded with curly brackets',
       ],
     },
-  ],
-
-  valid: [
-    `
-      switch (a) {
-        case 1: {}
-      }
-    `,
-    `
-      switch (a) {
-        case 1: {}
-        default: {}
-      }
-    `,
   ],
 });
