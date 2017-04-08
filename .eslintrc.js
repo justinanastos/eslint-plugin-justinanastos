@@ -9,6 +9,7 @@ module.exports = {
   env: {
     es6: true,
     node: true,
+    commonjs: true,
   },
 
   plugins: [
@@ -32,6 +33,6 @@ module.exports = {
     'no-multi-assign': 'off',
     'no-loop-func': 'off',
     'no-console': 'warn',
-    'strict': ['warn', 'global'],
+    'strict': ['warn', 'safe'],
   }
 };

@@ -17,33 +17,36 @@ const RuleTester = require('eslint').RuleTester;
 //------------------------------------------------------------------------------
 
 const ruleTester = new RuleTester();
-ruleTester.run('alpha-object-expression', rule, {
-  // eslint-disable-next-line justinanastos/alpha-object-expression
-  valid: [
-    'var obj = { a: true, b: false }',
-    {
-      code: 'var obj = { b, a: true }',
-      parserOptions: { ecmaVersion: 6 },
-    },
-    {
-      code: 'var obj = { a: true, b }',
-      options: [{
-        favorShorthand: false,
-      }],
-      parserOptions: { ecmaVersion: 6 },
-    },
-    {
-      code: 'var obj = { B: true, A: true }',
-      options: [{
-        ignoreAllCapitalized: true,
-      }],
-      parserOptions: { ecmaVersion: 6 },
-    },
-    {
-      code: 'React.createClass({ d: true, a: true })',
-    },
-    {
-      code: `
+ruleTester.run(
+  'alpha-object-expression',
+  rule,
+  {
+    // eslint-disable-next-line justinanastos/alpha-object-expression
+    valid: [
+      'var obj = { a: true, b: false }',
+      {
+        code: 'var obj = { b, a: true }',
+        parserOptions: { ecmaVersion: 6 },
+      },
+      {
+        code: 'var obj = { a: true, b }',
+        options: [{
+          favorShorthand: false,
+        }],
+        parserOptions: { ecmaVersion: 6 },
+      },
+      {
+        code: 'var obj = { B: true, A: true }',
+        options: [{
+          ignoreAllCapitalized: true,
+        }],
+        parserOptions: { ecmaVersion: 6 },
+      },
+      {
+        code: 'React.createClass({ d: true, a: true })',
+      },
+      {
+        code: `
         import { Component } from 'React';
 
         class A extends Component {
@@ -51,92 +54,93 @@ ruleTester.run('alpha-object-expression', rule, {
           componentDidMount() {}
         }
       `,
-      parserOptions: { ecmaVersion: 6, sourceType: 'module' },
-    },
-  ],
+        parserOptions: { ecmaVersion: 6, sourceType: 'module' },
+      },
+    ],
 
-  invalid: [
-    {
-      code: 'var obj = { B: true, A: true }',
-      errors: [
-        '\'B\' and \'A\' are not alphabetized',
-      ],
-      output: 'var obj = { A: true, B: true }',
-      parserOptions: { ecmaVersion: 6 },
-    },
-    {
-      code: `
+    invalid: [
+      {
+        code: 'var obj = { B: true, A: true }',
+        errors: [
+          '\'B\' and \'A\' are not alphabetized',
+        ],
+        output: 'var obj = { A: true, B: true }',
+        parserOptions: { ecmaVersion: 6 },
+      },
+      {
+        code: `
         var obj = {
           B: true,
           A: true
         }
       `,
-      errors: [
-        '\'B\' and \'A\' are not alphabetized',
-      ],
-      output: `
+        errors: [
+          '\'B\' and \'A\' are not alphabetized',
+        ],
+        output: `
         var obj = {
           A: true,
           B: true
         }
       `,
-      parserOptions: { ecmaVersion: 6 },
-    },
-    {
-      code: `
+        parserOptions: { ecmaVersion: 6 },
+      },
+      {
+        code: `
         var obj = {
           'B-1': true,
           'A-1': true
         }
       `,
-      errors: [
-        '\'B-1\' and \'A-1\' are not alphabetized',
-      ],
-      output: `
+        errors: [
+          '\'B-1\' and \'A-1\' are not alphabetized',
+        ],
+        output: `
         var obj = {
           'A-1': true,
           'B-1': true
         }
       `,
-      parserOptions: { ecmaVersion: 6 },
-    },
-    {
-      code: 'var obj = { b, a: true }',
-      errors: [
-        '\'b\' and \'a\' are not alphabetized',
-      ],
-      options: [{
-        favorShorthand: false,
-      }],
-      output: 'var obj = { a: true, b }',
-      parserOptions: { ecmaVersion: 6 },
-    },
-    {
-      code: 'var obj = { b: true, A: true }',
-      errors: [
-        '\'b\' and \'A\' are not alphabetized',
-      ],
-      options: [{
-        ignoreAllCapitalized: true,
-      }],
-      output: 'var obj = { A: true, b: true }',
-      parserOptions: { ecmaVersion: 6 },
-    },
-    {
-      code: 'var obj = { b: () => true, a: false }',
-      errors: [
-        '\'b\' and \'a\' are not alphabetized',
-      ],
-      output: 'var obj = { a: false, b: () => true }',
-      parserOptions: { ecmaVersion: 6 },
-    },
-    {
-      code: 'var obj = { b() {}, a: true }',
-      errors: [
-        '\'b\' and \'a\' are not alphabetized',
-      ],
-      output: 'var obj = { a: true, b() {} }',
-      parserOptions: { ecmaVersion: 6 },
-    },
-  ],
-});
+        parserOptions: { ecmaVersion: 6 },
+      },
+      {
+        code: 'var obj = { b, a: true }',
+        errors: [
+          '\'b\' and \'a\' are not alphabetized',
+        ],
+        options: [{
+          favorShorthand: false,
+        }],
+        output: 'var obj = { a: true, b }',
+        parserOptions: { ecmaVersion: 6 },
+      },
+      {
+        code: 'var obj = { b: true, A: true }',
+        errors: [
+          '\'b\' and \'A\' are not alphabetized',
+        ],
+        options: [{
+          ignoreAllCapitalized: true,
+        }],
+        output: 'var obj = { A: true, b: true }',
+        parserOptions: { ecmaVersion: 6 },
+      },
+      {
+        code: 'var obj = { b: () => true, a: false }',
+        errors: [
+          '\'b\' and \'a\' are not alphabetized',
+        ],
+        output: 'var obj = { a: false, b: () => true }',
+        parserOptions: { ecmaVersion: 6 },
+      },
+      {
+        code: 'var obj = { b() {}, a: true }',
+        errors: [
+          '\'b\' and \'a\' are not alphabetized',
+        ],
+        output: 'var obj = { a: true, b() {} }',
+        parserOptions: { ecmaVersion: 6 },
+      },
+    ],
+  })
+;

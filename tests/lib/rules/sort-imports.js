@@ -1,6 +1,4 @@
 /* eslint-disable wyze/max-file-length */
-
-
 const RuleTester = require('eslint').RuleTester;
 const rule = require('../../../lib/rules/sort-imports');
 
@@ -12,11 +10,6 @@ const expectedError = {
   message: 'Imports should be sorted alphabetically.',
   type: 'ImportDeclaration',
 };
-const orderError = (a, b) => ({
-  message: `Expected '${a}' syntax before '${b}' syntax.`,
-  type: 'ImportDeclaration',
-});
-
 const ignoreCaseArgs = [{ ignoreCase: true }];
 const ignoreMemberSortArgs = [{ ignoreMemberSort: true }];
 
@@ -223,240 +216,223 @@ new RuleTester().run(
       },
     ],
     invalid: [
-      // {
-      //   code:
-      //   `
-      //   import a from 'foo.js'
-      //   import A from 'bar.js'
-      //   `,
-      //   errors: [expectedError],
-      //   output:
-      //   `
-      //   import A from 'bar.js'
-      //   import a from 'foo.js'
-      //   `,
-      //   parserOptions,
-      // },
-      // {
-      //   code:
-      //   `
-      //   import a from 'foo.js'
-
-      //   import A from 'bar.js'
-      //   `,
-      //   errors: [expectedError],
-      //   output:
-      //   `
-      //   import A from 'bar.js'
-
-      //   import a from 'foo.js'
-      //   `,
-      //   parserOptions,
-      // },
-      // {
-      //   code:
-      //   `
-      //   import b from 'foo.js'
-      //   import a from 'bar.js'
-      //   `,
-      //   errors: [expectedError],
-      //   output:
-      //   `
-      //   import a from 'bar.js'
-      //   import b from 'foo.js'
-      //   `,
-      //   parserOptions,
-      // },
-      // {
-      //   code:
-      //   `
-      //   import { b, c } from 'foo.js'
-      //   import { a, b } from 'bar.js'
-      //   `,
-      //   errors: [expectedError],
-      //   output:
-      //   `
-      //   import { a, b } from 'bar.js'
-      //   import { b, c } from 'foo.js'
-      //   `,
-      //   parserOptions,
-      // },
-      // {
-      //   code:
-      //   `
-      //   import * as foo from 'foo.js'
-      //   import * as bar from 'bar.js'
-      //   `,
-      //   errors: [expectedError],
-      //   output:
-      //   `
-      //   import * as bar from 'bar.js'
-      //   import * as foo from 'foo.js'
-      //   `,
-      //   parserOptions,
-      // },
-      // {
-      //   code:
-      //   `
-      //   import a from 'foo.js'
-      //   import { b, c } from 'bar.js'
-      //   `,
-      //   errors: [
-      //     {
-      //       message: "Expected 'named' syntax before 'default' syntax.",
-      //       type: 'ImportDeclaration',
-      //     },
-      //   ],
-      //   output:
-      //   `
-      //   import { b, c } from 'bar.js'
-      //   import a from 'foo.js'
-      //   `,
-      //   parserOptions,
-      // },
-      // {
-      //   code:
-      //   `
-      //   import a from 'foo.js'
-      //   import * as b from 'bar.js'
-      //   `,
-      //   errors: [
-      //     {
-      //       message: "Expected 'all' syntax before 'default' syntax.",
-      //       type: 'ImportDeclaration',
-      //     },
-      //   ],
-      //   output:
-      //   `
-      //   import * as b from 'bar.js'
-      //   import a from 'foo.js'
-      //   `,
-      //   parserOptions,
-      // },
-      // {
-      //   code:
-      //   `
-      //   import a from 'foo.js'
-      //   import 'bar.js'
-      //   `,
-      //   errors: [
-      //     {
-      //       message: "Expected 'none' syntax before 'default' syntax.",
-      //       type: 'ImportDeclaration',
-      //     },
-      //   ],
-      //   output:
-      //   `
-      //   import 'bar.js'
-      //   import a from 'foo.js'
-      //   `,
-      //   parserOptions,
-      // },
-      // {
-      //   code:
-      //   `
-      //   import b from 'bar.js'
-      //   import * as a from 'foo.js'
-      //   `,
-      //   errors: [
-      //     {
-      //       message: "Expected 'all' syntax before 'default' syntax.",
-      //       type: 'ImportDeclaration',
-      //     },
-      //   ],
-      //   options: [
-      //     {
-      //       memberSyntaxSortOrder: [
-      //         'all', 'type', 'default', 'named', 'none',
-      //       ],
-      //     },
-      //   ],
-      //   output:
-      //   `
-      //   import * as a from 'foo.js'
-      //   import b from 'bar.js'
-      //   `,
-      //   parserOptions,
-      // },
-      // {
-      //   code:
-      //   `
-      //   import { b, a, d, c } from 'foo.js'
-      //   `,
-      //   errors: [
-      //     {
-      //       message: "Member 'a' of the import declaration should be sorted" +
-      //         ' alphabetically.',
-      //       type: 'ImportSpecifier',
-      //     },
-      //     {
-      //       message: "Member 'c' of the import declaration should be sorted" +
-      //         ' alphabetically.',
-      //       type: 'ImportSpecifier',
-      //     },
-      //   ],
-      //   output:
-      //   `
-      //   import { a, b, c, d } from 'foo.js'
-      //   `,
-      //   parserOptions,
-      // },
-      // {
-      //   code:
-      //   `
-      //   import { a, B, c, D } from 'foo.js'
-      //   `,
-      //   errors: [
-      //     {
-      //       message: "Member 'B' of the import declaration should be sorted" +
-      //         ' alphabetically.',
-      //       type: 'ImportSpecifier',
-      //     },
-      //     {
-      //       message: "Member 'D' of the import declaration should be sorted" +
-      //         ' alphabetically.',
-      //       type: 'ImportSpecifier',
-      //     },
-      //   ],
-      //   output:
-      //   `
-      //   import { B, a, D, c } from 'foo.js'
-      //   `,
-      //   parserOptions,
-      // },
-      // {
-      //   code:
-      //   `
-      //   import B from 'b'
-      //   import type { C } from 'c'
-      //   `,
-      //   errors: [
-      //     {
-      //       message: "Expected 'type' syntax before 'default' syntax.",
-      //       type: 'ImportDeclaration',
-      //     },
-      //   ],
-      //   output:
-      //   `
-      //   import type { C } from 'c'
-      //   import B from 'b'
-      //   `,
-      //   parser: 'babel-eslint',
-      //   parserOptions,
-      // },
       {
         code:
         `
-        import { createSelector } from 'reselect';
-        import * as types from '../action/types';
+        import a from 'foo.js'
+        import A from 'bar.js'
+        `,
+        errors: [expectedError],
+        output:
+        `
+        import A from 'bar.js'
+        import a from 'foo.js'
+        `,
+        parserOptions,
+      },
+      {
+        code:
+        `
+        import a from 'foo.js'
+
+        import A from 'bar.js'
+        `,
+        errors: [expectedError],
+        output:
+        `
+        import A from 'bar.js'
+
+        import a from 'foo.js'
+        `,
+        parserOptions,
+      },
+      {
+        code:
+        `
+        import b from 'foo.js'
+        import a from 'bar.js'
+        `,
+        errors: [expectedError],
+        output:
+        `
+        import a from 'bar.js'
+        import b from 'foo.js'
+        `,
+        parserOptions,
+      },
+      {
+        code:
+        `
+        import { b, c } from 'foo.js'
+        import { a, b } from 'bar.js'
+        `,
+        errors: [expectedError],
+        output:
+        `
+        import { a, b } from 'bar.js'
+        import { b, c } from 'foo.js'
+        `,
+        parserOptions,
+      },
+      {
+        code:
+        `
+        import * as foo from 'foo.js'
+        import * as bar from 'bar.js'
+        `,
+        errors: [expectedError],
+        output:
+        `
+        import * as bar from 'bar.js'
+        import * as foo from 'foo.js'
+        `,
+        parserOptions,
+      },
+      {
+        code:
+        `
+        import a from 'foo.js'
+        import { b, c } from 'bar.js'
         `,
         errors: [
-          orderError('all', 'named'),
+          {
+            message: "Expected 'named' syntax before 'default' syntax.",
+            type: 'ImportDeclaration',
+          },
         ],
         output:
         `
-        import * as types from '../action/types';
-        import { createSelector } from 'reselect';
+        import { b, c } from 'bar.js'
+        import a from 'foo.js'
+        `,
+        parserOptions,
+      },
+      {
+        code:
+        `
+        import a from 'foo.js'
+        import * as b from 'bar.js'
+        `,
+        errors: [
+          {
+            message: "Expected 'all' syntax before 'default' syntax.",
+            type: 'ImportDeclaration',
+          },
+        ],
+        output:
+        `
+        import * as b from 'bar.js'
+        import a from 'foo.js'
+        `,
+        parserOptions,
+      },
+      {
+        code:
+        `
+        import a from 'foo.js'
+        import 'bar.js'
+        `,
+        errors: [
+          {
+            message: "Expected 'none' syntax before 'default' syntax.",
+            type: 'ImportDeclaration',
+          },
+        ],
+        output:
+        `
+        import 'bar.js'
+        import a from 'foo.js'
+        `,
+        parserOptions,
+      },
+      {
+        code:
+        `
+        import b from 'bar.js'
+        import * as a from 'foo.js'
+        `,
+        errors: [
+          {
+            message: "Expected 'all' syntax before 'default' syntax.",
+            type: 'ImportDeclaration',
+          },
+        ],
+        options: [
+          {
+            memberSyntaxSortOrder: [
+              'all', 'type', 'default', 'named', 'none',
+            ],
+          },
+        ],
+        output:
+        `
+        import * as a from 'foo.js'
+        import b from 'bar.js'
+        `,
+        parserOptions,
+      },
+      {
+        code:
+        `
+        import { b, a, d, c } from 'foo.js'
+        `,
+        errors: [
+          {
+            message: "Member 'a' of the import declaration should be sorted" +
+              ' alphabetically.',
+            type: 'ImportSpecifier',
+          },
+          {
+            message: "Member 'c' of the import declaration should be sorted" +
+              ' alphabetically.',
+            type: 'ImportSpecifier',
+          },
+        ],
+        output:
+        `
+        import { a, b, c, d } from 'foo.js'
+        `,
+        parserOptions,
+      },
+      {
+        code:
+        `
+        import { a, B, c, D } from 'foo.js'
+        `,
+        errors: [
+          {
+            message: "Member 'B' of the import declaration should be sorted" +
+              ' alphabetically.',
+            type: 'ImportSpecifier',
+          },
+          {
+            message: "Member 'D' of the import declaration should be sorted" +
+              ' alphabetically.',
+            type: 'ImportSpecifier',
+          },
+        ],
+        output:
+        `
+        import { B, a, D, c } from 'foo.js'
+        `,
+        parserOptions,
+      },
+      {
+        code:
+        `
+        import B from 'b'
+        import type { C } from 'c'
+        `,
+        errors: [
+          {
+            message: "Expected 'type' syntax before 'default' syntax.",
+            type: 'ImportDeclaration',
+          },
+        ],
+        output:
+        `
+        import type { C } from 'c'
+        import B from 'b'
         `,
         parser: 'babel-eslint',
         parserOptions,

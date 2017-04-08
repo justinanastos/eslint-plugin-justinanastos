@@ -38,282 +38,286 @@ function unncessaryLineBreakError() {
 const parserOptions = { ecmaVersion: 6, sourceType: 'module' };
 
 const ruleTester = new RuleTester();
-ruleTester.run('import-destructuring-spacing', rule, {
-  // eslint-disable-next-line justinanastos/alpha-object-expression
-  valid: [
-    {
-      code: "import { a, b, c } from 'somewhere'",
-      options: [3],
-      parserOptions,
-    },
-    {
-      code: "import { a, b, c } from 'somewhere'",
-      options: [4],
-      parserOptions,
-    },
-    {
-      code: `
+ruleTester.run(
+  'import-destructuring-spacing',
+  rule,
+  {
+   // eslint-disable-next-line justinanastos/alpha-object-expression
+    valid: [
+      {
+        code: "import { a, b, c } from 'somewhere'",
+        options: [3],
+        parserOptions,
+      },
+      {
+        code: "import { a, b, c } from 'somewhere'",
+        options: [4],
+        parserOptions,
+      },
+      {
+        code: `
         import {
           a,
           b,
           c
         } from 'somewhere'
       `,
-      options: [2],
-      parserOptions,
-    },
-    {
-      code: `
+        options: [2],
+        parserOptions,
+      },
+      {
+        code: `
         import {
           a,
           b,
           c
         } from 'somewhere'
       `,
-      options: [2],
-      parserOptions,
-    },
-    {
-      code: `
+        options: [2],
+        parserOptions,
+      },
+      {
+        code: `
         import { a, b, c } from 'somewhere'
       `,
-      options: ['multiline'],
-      parserOptions,
-    },
-    {
-      code: `
+        options: ['multiline'],
+        parserOptions,
+      },
+      {
+        code: `
         import {
           a,
           b,
           c
         } from 'somewhere'
       `,
-      options: ['multiline'],
-      parserOptions,
-    },
-  ],
+        options: ['multiline'],
+        parserOptions,
+      },
+    ],
 
-  invalid: [
-    {
-      code: `
+    invalid: [
+      {
+        code: `
         import { a, b, c } from 'somewhere'
       `,
-      errors: [
-        openingBracketError('a'),
-        missingLineBreakError('a', 'b'),
-        missingLineBreakError('b', 'c'),
-        closingBracketError('c'),
-      ],
-      options: [1],
-      output: `
+        errors: [
+          openingBracketError('a'),
+          missingLineBreakError('a', 'b'),
+          missingLineBreakError('b', 'c'),
+          closingBracketError('c'),
+        ],
+        options: [1],
+        output: `
         import {
           a,
           b,
           c
         } from 'somewhere'
       `,
-      parserOptions,
-    },
-    {
-      code: `
+        parserOptions,
+      },
+      {
+        code: `
         import {
           a,
           b
         } from 'somewhere'
       `,
-      errors: [
-        unncessaryLineBreakError(),
-      ],
-      options: [3],
-      output: `
+        errors: [
+          unncessaryLineBreakError(),
+        ],
+        options: [3],
+        output: `
         import { a, b } from 'somewhere'
       `,
-      parserOptions,
-    },
-    {
-      code: `
+        parserOptions,
+      },
+      {
+        code: `
         import { a, b, c } from 'somewhere'
       `,
-      errors: [
-        openingBracketError('a'),
-        missingLineBreakError('a', 'b'),
-        missingLineBreakError('b', 'c'),
-        closingBracketError('c'),
-      ],
-      options: [2],
-      output: `
+        errors: [
+          openingBracketError('a'),
+          missingLineBreakError('a', 'b'),
+          missingLineBreakError('b', 'c'),
+          closingBracketError('c'),
+        ],
+        options: [2],
+        output: `
         import {
           a,
           b,
           c
         } from 'somewhere'
       `,
-      parserOptions,
-    },
-    {
-      code: `
+        parserOptions,
+      },
+      {
+        code: `
         import {
           a, b, c } from 'somewhere'
       `,
-      errors: [
-        missingLineBreakError('a', 'b'),
-        missingLineBreakError('b', 'c'),
-        closingBracketError('c'),
-      ],
-      options: [2],
-      output: `
+        errors: [
+          missingLineBreakError('a', 'b'),
+          missingLineBreakError('b', 'c'),
+          closingBracketError('c'),
+        ],
+        options: [2],
+        output: `
         import {
           a,
           b,
           c
         } from 'somewhere'
       `,
-      parserOptions,
-    },
-    {
-      code: `
+        parserOptions,
+      },
+      {
+        code: `
         import {
           a, b, c } from 'somewhere'
       `,
-      errors: [
-        unncessaryLineBreakError(),
-      ],
-      options: [3],
-      output: `
+        errors: [
+          unncessaryLineBreakError(),
+        ],
+        options: [3],
+        output: `
         import { a, b, c } from 'somewhere'
       `,
-      parserOptions,
-    },
-    {
-      code: `
+        parserOptions,
+      },
+      {
+        code: `
         import { a, b, c
         } from 'somewhere'
       `,
-      errors: [
-        unncessaryLineBreakError(),
-      ],
-      options: [3],
-      output: `
+        errors: [
+          unncessaryLineBreakError(),
+        ],
+        options: [3],
+        output: `
         import { a, b, c } from 'somewhere'
       `,
-      parserOptions,
-    },
-    {
-      code: `
+        parserOptions,
+      },
+      {
+        code: `
         import { a, b, c
         } from 'somewhere'
       `,
-      errors: [
-        openingBracketError('a'),
-        missingLineBreakError('a', 'b'),
-        missingLineBreakError('b', 'c'),
-      ],
-      options: [2],
-      parserOptions,
-    },
-    {
-      code: `
+        errors: [
+          openingBracketError('a'),
+          missingLineBreakError('a', 'b'),
+          missingLineBreakError('b', 'c'),
+        ],
+        options: [2],
+        parserOptions,
+      },
+      {
+        code: `
         import {
           a, b,
           c
         } from 'somewhere'
       `,
-      errors: [
-        missingLineBreakError('a', 'b'),
-      ],
-      options: ['multiline'],
-      parserOptions,
-    },
-    {
-      code: `
+        errors: [
+          missingLineBreakError('a', 'b'),
+        ],
+        options: ['multiline'],
+        parserOptions,
+      },
+      {
+        code: `
         import {
           a, b, c
         } from 'somewhere'
       `,
-      errors: [
-        missingLineBreakError('a', 'b'),
-        missingLineBreakError('b', 'c'),
-      ],
-      options: ['multiline'],
-      parserOptions,
-    },
-    {
-      code: `
+        errors: [
+          missingLineBreakError('a', 'b'),
+          missingLineBreakError('b', 'c'),
+        ],
+        options: ['multiline'],
+        parserOptions,
+      },
+      {
+        code: `
         import {
           a,
           b,
           c } from 'somewhere'
       `,
-      errors: [
-        closingBracketError('c'),
-      ],
-      options: ['multiline'],
-      parserOptions,
-    },
-    {
-      code: `
+        errors: [
+          closingBracketError('c'),
+        ],
+        options: ['multiline'],
+        parserOptions,
+      },
+      {
+        code: `
         import { a,
           b,
           c
         } from 'somewhere'
       `,
-      errors: [
-        openingBracketError('a'),
-      ],
-      options: ['multiline'],
-      parserOptions,
-    },
-    {
-      code: `
+        errors: [
+          openingBracketError('a'),
+        ],
+        options: ['multiline'],
+        parserOptions,
+      },
+      {
+        code: `
         import { a,
           b,
           c
         } from 'somewhere'
       `,
-      errors: [
-        openingBracketError('a'),
-      ],
-      options: ['multiline'],
-      parserOptions,
-    },
-    {
-      code: `
+        errors: [
+          openingBracketError('a'),
+        ],
+        options: ['multiline'],
+        parserOptions,
+      },
+      {
+        code: `
         import {
           a,
           b,
           c } from 'somewhere'
       `,
-      errors: [
-        closingBracketError('c'),
-      ],
-      options: [2],
-      parserOptions,
-    },
-    {
-      code: `
+        errors: [
+          closingBracketError('c'),
+        ],
+        options: [2],
+        parserOptions,
+      },
+      {
+        code: `
         import { a,
           b,
           c
         } from 'somewhere'
       `,
-      errors: [
-        openingBracketError('a'),
-      ],
-      options: [2],
-      parserOptions,
-    },
-    {
-      code: `
+        errors: [
+          openingBracketError('a'),
+        ],
+        options: [2],
+        parserOptions,
+      },
+      {
+        code: `
         import { a,
           b,
           c
         } from 'somewhere'
       `,
-      errors: [
-        openingBracketError('a'),
-      ],
-      options: [2],
-      parserOptions,
-    },
-  ],
-});
+        errors: [
+          openingBracketError('a'),
+        ],
+        options: [2],
+        parserOptions,
+      },
+    ],
+  })
+;
