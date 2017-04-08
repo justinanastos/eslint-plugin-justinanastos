@@ -47,7 +47,7 @@ $ npm i --save-dev eslint-plugin-justinanastos eslint
 * [func-arg-line-breaks](./docs/rules/func-arg-line-breaks.md): Enforce line breaks between all call expression arguments if any arguments are split by a line break. _(🔧 fixable)_
 * [import-destructuring-spacing](./docs/rules/import-destructuring-spacing.md): Enforce whitespace in destructured import statements. _(🔧 fixable)_
 * [shortcuts](./docs/rules/shortcuts.md): Enforce [airbnb's Comparison Operators & Equality > Shortcuts](https://github.com/airbnb/javascript#comparison--shortcuts). _(🔧 fixable)_
-* [switch-braches](./docs/rules/switch-braches.md): Enforce braces around switch statements. _(🔧 fixable)_
+* [switch-braces](./docs/rules/switch-braces.md): Enforce braces around switch statements. _(🔧 fixable)_
 
 
 ## Recommended Config
