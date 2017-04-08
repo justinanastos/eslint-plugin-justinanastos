@@ -55,6 +55,14 @@ ruleTester.run('sort-imports', rule, {
     },
     {
       parserOptions,
+      code: "import b from 'b.js';\n" +
+            "import a from 'a.js';",
+      errors: ["Imports should be sorted alphabetically."],
+      output: "import a from 'a.js';\n" +
+            "import b from 'b.js';",
+    },
+    {
+      parserOptions,
       code: "import { B, a } from 'somewhere';",
       errors: ["Member 'a' of the import declaration should be sorted alphabetically."],
       options: [{
@@ -67,6 +75,22 @@ ruleTester.run('sort-imports', rule, {
       code: "import React, { b, a } from 'somewhere'",
       errors: ["Member 'a' of the import declaration should be sorted alphabetically."],
       output: "import React, { a, b } from 'somewhere'",
+    },
+    {
+      parserOptions,
+      code: `
+        import React, {
+          b,
+          a
+        } from 'somewhere'
+      `,
+      errors: ["Member 'a' of the import declaration should be sorted alphabetically."],
+      output: `
+        import React, {
+          a,
+          b
+        } from 'somewhere'
+      `,
     },
   ],
 });
