@@ -44,14 +44,6 @@ if (array.length) {}
 if (!array.length) {}
 ```
 
-```js
-// eslint shortcuts: ["error"]
-switch(a) {
-    case 1: break;
-    default: {break;}
-}
-```
-
 👍 Examples of **correct** code for this rule:
 
 ```js
@@ -74,17 +66,9 @@ if (array.length > 0) {}
 if (array.length === 0) {}
 ```
 
-```js
-// eslint shortcuts: ["error"]
-switch(a) {
-    case 1: break;
-    default: {break;}
-}
-```
-
 ## When Not To Use It
 
-If you don't want to enforce braces around `case` or `default` code blocks.
+If you don't want to enforce AirBNB shortcuts
 
 ## Resouces
 
