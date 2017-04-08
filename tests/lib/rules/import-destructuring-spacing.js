@@ -42,17 +42,16 @@ ruleTester.run('import-destructuring-spacing', rule, {
   // eslint-disable-next-line justinanastos/alpha-object-expression
   valid: [
     {
-      parserOptions,
       code: "import { a, b, c } from 'somewhere'",
       options: [3],
+      parserOptions,
     },
     {
-      parserOptions,
       code: "import { a, b, c } from 'somewhere'",
       options: [4],
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import {
           a,
@@ -61,9 +60,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
         } from 'somewhere'
       `,
       options: [2],
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import {
           a,
@@ -72,16 +71,16 @@ ruleTester.run('import-destructuring-spacing', rule, {
         } from 'somewhere'
       `,
       options: [2],
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import { a, b, c } from 'somewhere'
       `,
       options: ['multiline'],
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import {
           a,
@@ -90,12 +89,12 @@ ruleTester.run('import-destructuring-spacing', rule, {
         } from 'somewhere'
       `,
       options: ['multiline'],
+      parserOptions,
     },
   ],
 
   invalid: [
     {
-      parserOptions,
       code: `
         import { a, b, c } from 'somewhere'
       `,
@@ -113,9 +112,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
           c
         } from 'somewhere'
       `,
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import {
           a,
@@ -129,9 +128,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
       output: `
         import { a, b } from 'somewhere'
       `,
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import { a, b, c } from 'somewhere'
       `,
@@ -149,9 +148,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
           c
         } from 'somewhere'
       `,
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import {
           a, b, c } from 'somewhere'
@@ -169,9 +168,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
           c
         } from 'somewhere'
       `,
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import {
           a, b, c } from 'somewhere'
@@ -183,9 +182,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
       output: `
         import { a, b, c } from 'somewhere'
       `,
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import { a, b, c
         } from 'somewhere'
@@ -197,9 +196,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
       output: `
         import { a, b, c } from 'somewhere'
       `,
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import { a, b, c
         } from 'somewhere'
@@ -210,9 +209,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
         missingLineBreakError('b', 'c'),
       ],
       options: [2],
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import {
           a, b,
@@ -223,9 +222,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
         missingLineBreakError('a', 'b'),
       ],
       options: ['multiline'],
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import {
           a, b, c
@@ -236,9 +235,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
         missingLineBreakError('b', 'c'),
       ],
       options: ['multiline'],
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import {
           a,
@@ -249,9 +248,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
         closingBracketError('c'),
       ],
       options: ['multiline'],
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import { a,
           b,
@@ -262,9 +261,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
         openingBracketError('a'),
       ],
       options: ['multiline'],
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import { a,
           b,
@@ -275,9 +274,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
         openingBracketError('a'),
       ],
       options: ['multiline'],
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import {
           a,
@@ -288,9 +287,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
         closingBracketError('c'),
       ],
       options: [2],
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import { a,
           b,
@@ -301,9 +300,9 @@ ruleTester.run('import-destructuring-spacing', rule, {
         openingBracketError('a'),
       ],
       options: [2],
+      parserOptions,
     },
     {
-      parserOptions,
       code: `
         import { a,
           b,
@@ -314,6 +313,7 @@ ruleTester.run('import-destructuring-spacing', rule, {
         openingBracketError('a'),
       ],
       options: [2],
+      parserOptions,
     },
   ],
 });
