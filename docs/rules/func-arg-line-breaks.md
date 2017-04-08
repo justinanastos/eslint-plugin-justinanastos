@@ -4,11 +4,11 @@
 
 # Rule Details
 
-We want to enforce line breaks between all call expression arguments if any arguments are split by a line break. If any arguments are divided by line breaks, we also enforce a break after the opening paren `(` and the closing parem `)`.
+We want to enforce line breaks between all call expression arguments if any arguments are split by a line break. If any arguments are divided by line breaks, we also enforce a break after the opening paren `(` and the closing paren `)`.
 
 # Options
 
-This rule no options.
+This rule has no options.
 
 # Examples
 
@@ -56,16 +56,6 @@ func(
 func(
   a, b,
   c, d()
-);
-```
-
-```js
-// eslint func-arg-line-breaks: ["error"]
-func(
-  a,
-  b,
-  c,
-  d()
 );
 ```
 
