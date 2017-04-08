@@ -71,7 +71,7 @@ new RuleTester().run(
         code:
         `
         import { a, b } from 'bar.js'
-        import { b, c } from 'foo.js'
+        import { c, d } from 'foo.js'
         `,
         parserOptions,
       },
@@ -95,7 +95,7 @@ new RuleTester().run(
         code:
         `
         import a, * as b from 'foo.js'
-        import b from 'bar.js'
+        import c from 'bar.js'
         `,
         parserOptions,
       },
@@ -264,12 +264,12 @@ new RuleTester().run(
         code:
         `
         import { b, c } from 'foo.js'
-        import { a, b } from 'bar.js'
+        import { a, d } from 'bar.js'
         `,
         errors: [expectedError],
         output:
         `
-        import { a, b } from 'bar.js'
+        import { a, d } from 'bar.js'
         import { b, c } from 'foo.js'
         `,
         parserOptions,
